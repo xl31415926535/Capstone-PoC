@@ -1,0 +1,403 @@
+{
+  "id": "06636304-17f6-49ae-b773-f940208fe162",
+  "version": 1,
+  "createdAt": "2026-09-29T12:22:35.241Z",
+  "updatedAt": "2026-09-29T12:26:12.693Z",
+  "status": "completed",
+  "provider": "codex",
+  "plan": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "difficulty": "Easy"
+    }
+  ],
+  "entries": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "recordId": "7c72f29b-9b98-4124-be37-881642368948",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "recordId": "261cbefd-1bda-46e6-9cd6-4aaa0199cfa6",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries"
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "recordId": "a87b464c-dd96-499c-9028-dd2d74b51c41",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries"
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "recordId": "c3a9601d-a5d8-4059-af08-a85f0f5b5ddd",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": false,
+      "initialBlindIssues": [
+        "The stem specifies secure clip contacts but does not explicitly establish direct contact between core and covering. An intervening air gap could produce the same results with a conducting covering.",
+        "Option 1 follows if direct core–covering contact is assumed; option 4 is defensible without that assumption. Specify that the covering directly contacts the core with no intervening gap or layer, or test between two covering spots.",
+        "Resolving an unstated interface condition adds reasoning beyond the intended P5 conductor/insulator concept."
+      ]
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries"
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "recordId": "0c3dfb59-757a-4a7a-8aeb-507d5793de57",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "recordId": "a9ee4154-30e0-4754-8ef4-2fbe125bcbf8",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "The second copper test is redundant under the stipulated unchanged tester state, though it remains a valid check.",
+        "Option 2 cannot establish the tester's condition during the original observation: the unchanged-state guarantee applies only to the new sequence."
+      ]
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "recordId": "5ebcb1fc-cb0f-4430-91fa-48796f022683",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    }
+  ],
+  "generatorUsage": {
+    "input_tokens": 16614,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6142,
+    "reasoning_output_tokens": 75
+  },
+  "blindUsage": {
+    "input_tokens": 17011,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 775,
+    "reasoning_output_tokens": 168
+  },
+  "generatorModel": null,
+  "generationMs": 188569,
+  "blindModel": null,
+  "blindMs": 28736,
+  "completedAt": "2026-09-29T12:26:12.693Z",
+  "rows": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "recordId": "7c72f29b-9b98-4124-be37-881642368948",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "Sorting test strips",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Classify materials using results from a working circuit tester.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "recordId": "261cbefd-1bda-46e6-9cd6-4aaa0199cfa6",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "Moving a sliding contact",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Medium",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Predict circuit completion from the location of electrical contacts.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries",
+      "title": "Generation failed",
+      "status": "failed",
+      "version": null,
+      "currentBlocking": null,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": null
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "recordId": "a87b464c-dd96-499c-9028-dd2d74b51c41",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "Testing a new strip",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Choose a valid placement for testing electrical conduction.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries",
+      "title": "Generation failed",
+      "status": "failed",
+      "version": null,
+      "currentBlocking": null,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": null
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "recordId": "c3a9601d-a5d8-4059-af08-a85f0f5b5ddd",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": false,
+      "initialBlindIssues": [
+        "The stem specifies secure clip contacts but does not explicitly establish direct contact between core and covering. An intervening air gap could produce the same results with a conducting covering.",
+        "Option 1 follows if direct core–covering contact is assumed; option 4 is defensible without that assumption. Specify that the covering directly contacts the core with no intervening gap or layer, or test between two covering spots.",
+        "Resolving an unstated interface condition adds reasoning beyond the intended P5 conductor/insulator concept."
+      ],
+      "title": "Inside a covered rod",
+      "status": "draft",
+      "currentBlocking": 1,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Hard",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Separate evidence about a core from evidence about its covering.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "error": "Invalid item structure: item.syllabus_mapping has too few entries",
+      "title": "Generation failed",
+      "status": "failed",
+      "version": null,
+      "currentBlocking": null,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": null
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "recordId": "0c3dfb59-757a-4a7a-8aeb-507d5793de57",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "A clip on the wire covering",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Medium",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Locate a failed electrical contact despite physical contact.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "recordId": "a9ee4154-30e0-4754-8ef4-2fbe125bcbf8",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "The second copper test is redundant under the stipulated unchanged tester state, though it remains a valid check.",
+        "Option 2 cannot establish the tester's condition during the original observation: the unchanged-state guarantee applies only to the new sequence."
+      ],
+      "title": "Checking a tester and a sample",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Hard",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Design a controlled sequence that separates a sample result from tester failure.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "recordId": "5ebcb1fc-cb0f-4430-91fa-48796f022683",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "Does shape stop conduction?",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Evaluate whether changing a conductor's shape necessarily opens a circuit.",
+        "reviewed": false
+      }
+    }
+  ],
+  "metrics": {
+    "requested": 10,
+    "generated": 7,
+    "generationFailed": 3,
+    "localPass": 7,
+    "blindCompleted": 7,
+    "blindAgreed": 6,
+    "humanReviewed": 0,
+    "humanApproved": 0,
+    "humanAcceptanceRate": null,
+    "averageReviewSeconds": null,
+    "reviewSecondsPerApproved": null,
+    "approvedTimedCount": 0,
+    "reviewTimeSamples": 0
+  },
+  "definitions": {
+    "humanAcceptanceRate": "Approved current versions / current versions with a recorded human decision. Unreviewed items are excluded; this is not a scientific accuracy estimate.",
+    "localPass": "Initial schema/rule checks only. Does not include the required blind-review gate and does not certify science.",
+    "reviewTime": "Reviewer-reported active minutes, converted to seconds; not automatically measured wall-clock time.",
+    "limitations": "No teacher calibration, real pupil trial, global originality check or cross-provider independence is implied."
+  }
+}

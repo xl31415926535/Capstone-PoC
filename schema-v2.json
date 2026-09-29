@@ -1,0 +1,759 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_on": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "draft_pending_human_review"
+      ]
+    },
+    "official_exam_question": {
+      "type": "boolean",
+      "enum": [
+        false
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Science"
+      ]
+    },
+    "education_system": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Singapore MOE"
+      ]
+    },
+    "grade": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Primary 5"
+      ]
+    },
+    "stream": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Standard"
+      ]
+    },
+    "syllabus_version": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "2023 Primary Science Teaching and Learning Syllabus"
+      ]
+    },
+    "theme": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Systems"
+      ]
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "Electrical System"
+      ]
+    },
+    "subtopics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "en-SG"
+      ]
+    },
+    "format": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "MCQ"
+      ]
+    },
+    "number_of_options": {
+      "type": "integer",
+      "enum": [
+        4
+      ]
+    },
+    "number_of_correct_options": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "marks": {
+      "type": "integer",
+      "enum": [
+        2
+      ]
+    },
+    "format_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "skill": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty_target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty_estimate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "empirical_item_difficulty": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "estimated_time_seconds": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "generation_blueprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "student_question": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diagram_alt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "test": {
+                "type": "integer",
+                "enum": [
+                  1,
+                  2
+                ]
+              },
+              "gap_X": {
+                "type": "string",
+                "minLength": 1,
+                "enum": [
+                  "P",
+                  "Q",
+                  "R"
+                ]
+              },
+              "gap_Y": {
+                "type": "string",
+                "minLength": 1,
+                "enum": [
+                  "P",
+                  "Q",
+                  "R"
+                ]
+              },
+              "bulb": {
+                "type": "string",
+                "minLength": 1,
+                "enum": [
+                  "lights",
+                  "does not light"
+                ]
+              }
+            },
+            "required": [
+              "test",
+              "gap_X",
+              "gap_Y",
+              "bulb"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 0
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "text"
+            ]
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "table": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0,
+              "maxItems": 5
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "maxItems": 5
+              },
+              "minItems": 0,
+              "maxItems": 8
+            }
+          },
+          "required": [
+            "columns",
+            "rows"
+          ]
+        }
+      },
+      "required": [
+        "stem",
+        "diagram_alt",
+        "observations",
+        "question",
+        "options",
+        "table"
+      ]
+    },
+    "answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "option_id": {
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "conductors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "P",
+              "Q",
+              "R"
+            ]
+          }
+        },
+        "insulators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "P",
+              "Q",
+              "R"
+            ]
+          }
+        },
+        "explanation_en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scoring": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "option_id",
+        "conductors",
+        "insulators",
+        "explanation_en",
+        "scoring"
+      ]
+    },
+    "distractor_rationales": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "option_id": {
+            "type": "integer"
+          },
+          "issue": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "option_id",
+          "issue"
+        ]
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "syllabus_mapping": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "internal_mapping_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "official_code": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "printed_page": {
+                "type": "integer"
+              },
+              "section": {
+                "type": "string",
+                "minLength": 1
+              },
+              "outcome_paraphrase": {
+                "type": "string",
+                "minLength": 1
+              },
+              "item_evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "internal_mapping_id",
+              "official_code",
+              "source_id",
+              "printed_page",
+              "section",
+              "outcome_paraphrase",
+              "item_evidence"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "internal_mapping_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "official_code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pdf_page": {
+                "type": "integer"
+              },
+              "outcome_paraphrase": {
+                "type": "string",
+                "minLength": 1
+              },
+              "item_evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "internal_mapping_id",
+              "official_code",
+              "source_id",
+              "pdf_page",
+              "outcome_paraphrase",
+              "item_evidence"
+            ]
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 3
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "access_note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "url",
+              "role",
+              "access_note"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "official_landing_page": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "access_note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "url",
+              "official_landing_page",
+              "role",
+              "access_note"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "url",
+              "role"
+            ]
+          }
+        ]
+      },
+      "minItems": 2
+    },
+    "generation_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_commercial_model_api_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_paper_rewritten": {
+          "type": "boolean"
+        },
+        "question_observations": {
+          "type": "string",
+          "minLength": 1
+        },
+        "design_summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "generator",
+        "external_commercial_model_api_calls",
+        "source_paper_rewritten",
+        "question_observations",
+        "design_summary"
+      ]
+    },
+    "review_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "independent_review": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "curriculum_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "logic_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originality_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "difficulty_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_reviewer": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null
+          ]
+        },
+        "human_approval": {
+          "type": "string",
+          "minLength": 1,
+          "enum": [
+            "Pending"
+          ]
+        },
+        "ready_for_live_assessment": {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        }
+      },
+      "required": [
+        "independent_review",
+        "revision",
+        "curriculum_check",
+        "logic_check",
+        "originality_check",
+        "difficulty_check",
+        "language_check",
+        "human_reviewer",
+        "human_approval",
+        "ready_for_live_assessment"
+      ]
+    },
+    "model_version": {
+      "type": "string",
+      "enum": [
+        "science-v2"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question_family": {
+      "type": "string",
+      "enum": [
+        "material_inference",
+        "circuit_prediction",
+        "fault_diagnosis",
+        "test_design",
+        "claim_evaluation"
+      ]
+    },
+    "design": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reasoningTask": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredKnowledge": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "originalityRationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "reasoningTask",
+        "requiredKnowledge",
+        "originalityRationale"
+      ]
+    },
+    "solution_steps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 6
+    }
+  },
+  "required": [
+    "item_id",
+    "version",
+    "created_on",
+    "status",
+    "official_exam_question",
+    "subject",
+    "education_system",
+    "grade",
+    "stream",
+    "syllabus_version",
+    "theme",
+    "topic",
+    "subtopics",
+    "language",
+    "format",
+    "number_of_options",
+    "number_of_correct_options",
+    "marks",
+    "format_note",
+    "skill",
+    "difficulty_target",
+    "difficulty_estimate",
+    "difficulty_status",
+    "empirical_item_difficulty",
+    "estimated_time_seconds",
+    "generation_blueprint",
+    "student_question",
+    "answer",
+    "distractor_rationales",
+    "syllabus_mapping",
+    "sources",
+    "generation_record",
+    "review_record",
+    "model_version",
+    "title",
+    "question_family",
+    "design",
+    "solution_steps"
+  ],
+  "description": "Full audit-shaped generated P5 electricity item. Original demonstration metadata shape is retained. No field may claim human approval. This schema does not prove scientific validity."
+}

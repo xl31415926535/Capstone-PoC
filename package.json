@@ -1,0 +1,19 @@
+{
+  "name": "simcc-science-studio-poc",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Local syllabus-grounded science question generation and human review prototype",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "demo": "node scripts/start-recorded-demo.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xl31415926535/Capstone-PoC.git"
+  }
+}

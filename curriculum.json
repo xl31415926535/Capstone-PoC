@@ -1,0 +1,29 @@
+{
+  "id": "MOE-2023-P5-ELECTRICITY",
+  "title": "Singapore MOE — P5 Standard Electrical System",
+  "version": "2023 Primary Science Teaching and Learning Syllabus",
+  "grade": "Primary 5",
+  "stream": "Standard",
+  "topic": "Electrical System",
+  "objectives": [
+    {
+      "id": "P5-ELEC-CLOSED",
+      "title": "Closed circuits",
+      "description": "Paraphrased outcome: understand that a closed circuit permits current to flow. This ID is an internal mapping label, not an official MOE code. Alignment remains subject to teacher review.",
+      "page": 59,
+      "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    },
+    {
+      "id": "P5-ELEC-MATERIALS",
+      "title": "Electrical conductors and insulators",
+      "description": "Paraphrased outcome: identify electrical conductors and insulators. This ID is an internal mapping label, not an official MOE code. The demonstration tests inference from observations, not a practical construction skill.",
+      "page": 59,
+      "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    }
+  ],
+  "assessment": {
+    "title": "PSLE Science — for examination from 2026",
+    "url": "https://isomer-user-content.by.gov.sg/334/24bb2fea-a0e0-4aaf-9a11-ae1ef1b8840e/0009_y26_sy.pdf",
+    "note": "The demonstration borrows the four-option, two-mark MCQ format and application/data-interpretation objective. It is a P5 practice item, not an official PSLE question. Source requirements do not establish empirical difficulty or originality."
+  }
+}

@@ -1,0 +1,18 @@
+# Local records, prompts, model receipts and isolated demos
+/data/
+/runtime/
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated packages and local tooling
+node_modules/
+coverage/
+*.log
+*.zip
+.DS_Store
+Thumbs.db

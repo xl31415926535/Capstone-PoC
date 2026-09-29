@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "optionId": {"type": ["integer", "null"], "enum": [1, 2, 3, 4, null], "description": "Choose 1–4, or null if the question is ambiguous, inconsistent, or insufficient."},
+    "reasoning": {"type": "string"},
+    "issues": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["optionId", "reasoning", "issues"]
+}

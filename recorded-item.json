@@ -1,0 +1,85 @@
+{
+  "item_id": "SIMCC-DEMO-P5-ELEC-001",
+  "version": "1.1",
+  "created_on": "2026-09-28",
+  "status": "draft_pending_human_review",
+  "official_exam_question": false,
+  "subject": "Science",
+  "education_system": "Singapore MOE",
+  "grade": "Primary 5",
+  "stream": "Standard",
+  "syllabus_version": "2023 Primary Science Teaching and Learning Syllabus",
+  "theme": "Systems",
+  "topic": "Electrical System",
+  "subtopics": ["Closed circuits", "Electrical conductors and insulators"],
+  "language": "en-SG",
+  "format": "MCQ",
+  "number_of_options": 4,
+  "number_of_correct_options": 1,
+  "marks": 2,
+  "format_note": "Uses the 2026 PSLE four-option, two-mark MCQ format for a P5 practice item. This is not an official PSLE question.",
+  "skill": "Application of knowledge; interpreting and analysing observations",
+  "difficulty_target": "Medium",
+  "difficulty_estimate": "Easy to Medium",
+  "difficulty_status": "Provisional; no teacher calibration or pupil trial",
+  "empirical_item_difficulty": null,
+  "estimated_time_seconds": null,
+  "generation_blueprint": "Infer the electrical properties of three unknown strips using two observations from a single-loop circuit with two gaps. Use reliable contact and a good-conductor/insulator assumption to make the inference unambiguous.",
+  "student_question": {
+    "stem": "Aisha makes a circuit with one battery, one bulb and two gaps, X and Y, in the same loop. She has three strips, P, Q and R. Each strip is either a good electrical conductor or an electrical insulator.\n\nIn each test, she places one strip across X and another across Y. Each strip touches both wire ends securely. The battery, bulb and wires work properly in both tests. Apart from the strips shown below, the circuit is unchanged.",
+    "diagram_alt": "A single loop with one battery and one bulb. Two gaps, X and Y, lie in series in the same loop. A strip bridges each gap. There are no branches or bypass wires.",
+    "observations": [
+      {"test": 1, "gap_X": "P", "gap_Y": "Q", "bulb": "does not light"},
+      {"test": 2, "gap_X": "Q", "gap_Y": "R", "bulb": "lights"}
+    ],
+    "question": "Which strips are electrical conductors?",
+    "options": [
+      {"id": 1, "text": "P and Q only"},
+      {"id": 2, "text": "P and R only"},
+      {"id": 3, "text": "Q and R only"},
+      {"id": 4, "text": "P, Q and R"}
+    ]
+  },
+  "answer": {
+    "option_id": 3,
+    "conductors": ["Q", "R"],
+    "insulators": ["P"],
+    "explanation_en": "The bulb lights in Test 2, so both Q and R allow electric current to pass through them. In Test 1, Q is already known to be a conductor. With working components and secure contacts, the bulb not lighting shows that P breaks the conducting path under the stated conductor-or-insulator assumption. Therefore, Q and R are conductors and P is an insulator.",
+    "scoring": "Award 2 marks for option 3; otherwise 0. Confirm this proposed scoring with SIMCC before use."
+  },
+  "distractor_rationales": [
+    {"option_id": 1, "issue": "Treats R as an insulator even though Test 2 lights; also treats P and Q as conductors despite Test 1."},
+    {"option_id": 2, "issue": "Treats Q as an insulator despite Test 2 lighting."},
+    {"option_id": 4, "issue": "Ignores Test 1; all three conducting would make the bulb light in both tests."}
+  ],
+  "syllabus_mapping": [
+    {"internal_mapping_id": "P5-ELEC-CLOSED", "official_code": null, "source_id": "MOE-2023", "printed_page": 59, "section": "Electrical System (P5 Standard)", "outcome_paraphrase": "Understand that a closed circuit permits current to flow.", "item_evidence": "Both gaps must permit current for the bulb to light."},
+    {"internal_mapping_id": "P5-ELEC-MATERIALS", "official_code": null, "source_id": "MOE-2023", "printed_page": 59, "section": "Electrical System (P5 Standard)", "outcome_paraphrase": "Identify electrical conductors and insulators.", "item_evidence": "Classify P, Q and R using the two observations."},
+    {"internal_mapping_id": "PSLE2026-AOII-DATA", "official_code": "Assessment Objective II", "source_id": "SEAB-2026", "pdf_page": 1, "outcome_paraphrase": "Apply science knowledge and interpret or analyse information.", "item_evidence": "Combine two observations to infer material properties."}
+  ],
+  "sources": [
+    {"id": "MOE-2023", "title": "MOE 2023 Primary Science Teaching and Learning Syllabus", "url": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx", "role": "Current curriculum scope", "access_note": "Relevant page 59 learning outcomes retrieved from the official-domain search index. Direct web fetch encounters a JavaScript check; the original PDF also opens in Chrome."},
+    {"id": "SEAB-2026", "title": "PSLE Science: For examination from 2026", "url": "https://isomer-user-content.by.gov.sg/334/24bb2fea-a0e0-4aaf-9a11-ae1ef1b8840e/0009_y26_sy.pdf", "official_landing_page": "https://www.seab.gov.sg/psle/psle-formats-examined-in-2026/", "role": "Assessment objectives and MCQ format", "access_note": "Two-page PDF read. It contains exam requirements, not specimen questions."},
+    {"id": "SEAB-REAL-ITEM", "title": "What thoughtful assessment design looks like in the PSLE", "url": "https://www.seab.gov.sg/seab-link-issue-2-2026/what-thoughtful-assessment-design-looks-like-in-the-psle-/", "role": "Official published 2025 Science Q37 and assessment-design discussion", "access_note": "Article read; the published question concerns volume, not electricity. Its question text and image were not reused."},
+    {"id": "SEAB-PAST-PAPERS", "title": "Distributors of Past Years' Question Papers", "url": "https://www.seab.gov.sg/distributors-of-past-years-question-papers/", "role": "Authorised source for complete past examination papers"}
+  ],
+  "generation_record": {
+    "generator": "Current assistant in this conversation",
+    "external_commercial_model_api_calls": 0,
+    "source_paper_rewritten": false,
+    "question_observations": "Constructed for this original demonstration; not measurements from a physical experiment.",
+    "design_summary": "Use a compact two-observation inference task within P5 electrical systems. Require both observations for the final classification. Avoid numerical current, resistance calculations and brightness comparisons."
+  },
+  "review_record": {
+    "independent_review": "A separate sub-agent of the same model received the draft without the supplied answer and independently selected option 3. This was not a different-vendor model or human expert.",
+    "revision": "Added the good electrical conductor / electrical insulator assumption after review identified the weak-conductor limitation. Clarified that only the listed strips change between tests.",
+    "curriculum_check": "Mapped to the two relevant P5 outcomes; not tagged as an actual circuit-construction practical or a series/parallel comparison.",
+    "logic_check": "See p5-electricity-validation.json for executed exhaustive Boolean check.",
+    "originality_check": "Two targeted web searches did not return an identical question in the inspected results. No SIMCC bank comparison, embedding search or comprehensive originality clearance was performed.",
+    "difficulty_check": "Same-model reviewer estimated Easy to Medium and noted that two distractors are comparatively easy to eliminate.",
+    "language_check": "Assistant reviewed clarity; pupil readability not tested.",
+    "human_reviewer": null,
+    "human_approval": "Pending",
+    "ready_for_live_assessment": false
+  }
+}

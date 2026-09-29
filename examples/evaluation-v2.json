@@ -1,0 +1,458 @@
+{
+  "id": "de1f1482-eef1-4f3b-86b2-2008896897ae",
+  "version": 1,
+  "createdAt": "2026-09-29T12:29:16.907Z",
+  "updatedAt": "2026-09-29T12:33:19.747Z",
+  "status": "completed",
+  "provider": "codex",
+  "plan": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "difficulty": "Easy"
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "difficulty": "Medium"
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "difficulty": "Hard"
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "difficulty": "Easy"
+    }
+  ],
+  "entries": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "recordId": "80955ce8-1559-4115-8342-0e17b9aad485",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "recordId": "4bd2b907-2e7e-4793-9ab6-2a431d4ed6f5",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "recordId": "d9f27436-e331-4878-8595-21a57daa1de3",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Tracking cumulative replacements adds working-memory demand, although the required circuit science is appropriate for P5."
+      ]
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "recordId": "3b75a240-8106-4eec-a307-02f8dc899bd4",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "The ideal conductor/insulator assumption makes the result decisive. In real samples, some current can flow without visibly lighting a bulb; 'ideal' terminology may need explaining at P5."
+      ]
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "recordId": "7fc1a849-c424-4fcc-9695-302fc0333dc2",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": []
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "recordId": "958c1b99-0af6-4a4d-803e-6ac1eae088f8",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Combining an uncertain tester result with an exact-count constraint adds logical demand beyond basic conductor identification, but does not make the answer ambiguous."
+      ]
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "recordId": "7407a78a-c7f0-4930-a9c2-8db378144b25",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Aluminium is a real conductor with finite resistance, not literally an ideal conductor. Air's insulating behaviour is appropriate to this low-voltage context."
+      ]
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "recordId": "020737df-3cf2-4313-8a9a-e5fb1a50f36a",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Option 3 is slightly awkwardly worded. 'Move the battery end of the second wire from the positive terminal to the negative terminal' would be clearer."
+      ]
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "recordId": "a2140612-b4bb-4a29-9112-ad79e1bce213",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Testing L would also distinguish the sets if interpreted correctly, but that correct plan is not offered; the listed options still have one valid answer."
+      ]
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "recordId": "b0aae832-2da2-4722-8d5d-022f3bd9cf2f",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Calling copper an ideal conductor is a simplifying model; real copper has finite resistance. This does not affect the conclusion."
+      ]
+    }
+  ],
+  "generatorUsage": {
+    "input_tokens": 18467,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6836,
+    "reasoning_output_tokens": 516
+  },
+  "blindUsage": {
+    "input_tokens": 17774,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 904,
+    "reasoning_output_tokens": 35
+  },
+  "generatorModel": null,
+  "generationMs": 209902,
+  "blindModel": null,
+  "blindMs": 32730,
+  "completedAt": "2026-09-29T12:33:19.746Z",
+  "rows": [
+    {
+      "index": 1,
+      "family": "material_inference",
+      "recordId": "80955ce8-1559-4115-8342-0e17b9aad485",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "A link for a lamp",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Infer a material's electrical property from a completed circuit.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 2,
+      "family": "circuit_prediction",
+      "recordId": "4bd2b907-2e7e-4793-9ab6-2a431d4ed6f5",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "The lid and the button",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Medium",
+        "objectives": [
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Combine two switch conditions to predict whether a loop is complete.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 3,
+      "family": "fault_diagnosis",
+      "recordId": "d9f27436-e331-4878-8595-21a57daa1de3",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Tracking cumulative replacements adds working-memory demand, although the required circuit science is appropriate for P5."
+      ],
+      "title": "Keeping track of wire replacements",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Hard",
+        "objectives": [
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Use cumulative replacements and a reversal test to locate multiple faults.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 4,
+      "family": "test_design",
+      "recordId": "3b75a240-8106-4eec-a307-02f8dc899bd4",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "The ideal conductor/insulator assumption makes the result decisive. In real samples, some current can flow without visibly lighting a bulb; 'ideal' terminology may need explaining at P5."
+      ],
+      "title": "Recording a useful observation",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Choose an observation that answers a question about electrical conduction.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 5,
+      "family": "claim_evaluation",
+      "recordId": "7fc1a849-c424-4fcc-9695-302fc0333dc2",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [],
+      "title": "Two changes at once",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Medium",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Evaluate whether a changed bulb result identifies the cause.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 6,
+      "family": "material_inference",
+      "recordId": "958c1b99-0af6-4a4d-803e-6ac1eae088f8",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Combining an uncertain tester result with an exact-count constraint adds logical demand beyond basic conductor identification, but does not make the answer ambiguous."
+      ],
+      "title": "Results from two testers",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Hard",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Combine reliable observations, uncertain equipment and a fixed number of conductors.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 7,
+      "family": "circuit_prediction",
+      "recordId": "7407a78a-c7f0-4930-a9c2-8db378144b25",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Aluminium is a real conductor with finite resistance, not literally an ideal conductor. Air's insulating behaviour is appropriate to this low-voltage context."
+      ],
+      "title": "A cut in the foil",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Predict the effect of removing continuity from a conducting path.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 8,
+      "family": "fault_diagnosis",
+      "recordId": "020737df-3cf2-4313-8a9a-e5fb1a50f36a",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Option 3 is slightly awkwardly worded. 'Move the battery end of the second wire from the positive terminal to the negative terminal' would be clearer."
+      ],
+      "title": "The wrong return connection",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Medium",
+        "objectives": [
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Locate an incorrect connection from a verbal circuit description.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 9,
+      "family": "test_design",
+      "recordId": "a2140612-b4bb-4a29-9112-ad79e1bce213",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Testing L would also distinguish the sets if interpreted correctly, but that correct plan is not offered; the listed options still have one valid answer."
+      ],
+      "title": "One test to choose a label",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Hard",
+        "objectives": [
+          "P5-ELEC-MATERIALS",
+          "P5-ELEC-CLOSED"
+        ],
+        "skill": "Choose a single test that distinguishes two remaining explanations.",
+        "reviewed": false
+      }
+    },
+    {
+      "index": 10,
+      "family": "claim_evaluation",
+      "recordId": "b0aae832-2da2-4722-8d5d-022f3bd9cf2f",
+      "version": 1,
+      "initialLocalBlocking": 0,
+      "initialBlindAgreement": true,
+      "initialBlindIssues": [
+        "Calling copper an ideal conductor is a simplifying model; real copper has finite resistance. This does not affect the conclusion."
+      ],
+      "title": "Does touching plastic stop the lamp?",
+      "status": "draft",
+      "currentBlocking": 0,
+      "decision": null,
+      "reviewSeconds": null,
+      "issueCodes": [],
+      "labels": {
+        "difficulty": "Easy",
+        "objectives": [
+          "P5-ELEC-CLOSED",
+          "P5-ELEC-MATERIALS"
+        ],
+        "skill": "Distinguish an insulator beside a conducting path from an insulator interrupting it.",
+        "reviewed": false
+      }
+    }
+  ],
+  "metrics": {
+    "requested": 10,
+    "generated": 10,
+    "generationFailed": 0,
+    "localPass": 10,
+    "blindCompleted": 10,
+    "blindAgreed": 10,
+    "humanReviewed": 0,
+    "humanApproved": 0,
+    "humanAcceptanceRate": null,
+    "averageReviewSeconds": null,
+    "reviewSecondsPerApproved": null,
+    "approvedTimedCount": 0,
+    "reviewTimeSamples": 0
+  },
+  "definitions": {
+    "humanAcceptanceRate": "Approved current versions / current versions with a recorded human decision. Unreviewed items are excluded; this is not a scientific accuracy estimate.",
+    "localPass": "Initial schema/rule checks only. Does not include the required blind-review gate and does not certify science.",
+    "reviewTime": "Reviewer-reported active minutes, converted to seconds; not automatically measured wall-clock time.",
+    "limitations": "No teacher calibration, real pupil trial, global originality check or cross-provider independence is implied."
+  }
+}

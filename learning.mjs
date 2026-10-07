@@ -35,7 +35,37 @@ export function compareConditions(reports) {
     return {retrieval:enabled,runs:runs.length,requested:sum('requested'),generated:sum('generated'),localPass:sum('localPass'),blindCompleted:sum('blindCompleted'),blindAgreed:sum('blindAgreed'),humanReviewed:reviewed,humanApproved:approved,humanAcceptanceRate:reviewed?approved/reviewed:null,averageReviewSeconds:timed.length?timed.reduce((s,x)=>s+x.reviewSeconds,0)/timed.length:null,sourceCompared:overlaps.length,sourceClose:sum('sourceClose'),sourceBlocked:sum('sourceBlocked'),meanSourceOverlap:overlaps.length?overlaps.reduce((s,x)=>s+x,0)/overlaps.length:null,issues};
   });
 }
-export function createPracticeService(store,fixtures) {
+// Difficulty calibration from anonymous practice responses. A band needs at
+// least minResponses answers to the same question version.
+export const CALIBRATION={minResponses:20,easy:0.8,medium:0.5,weakDistractor:0.05};
+const wilson=(k,n,z=1.96)=>{if(!n)return null;const p=k/n,d=1+z*z/n,c=p+z*z/(2*n),m=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return [Math.max(0,(c-m)/d),Math.min(1,(c+m)/d)];};
+export const pupilBand=p=>p>=CALIBRATION.easy?'Easy':p>=CALIBRATION.medium?'Medium':'Hard';
+export function calibrationReport(records,sessions) {
+  const groups=new Map();
+  for(const session of sessions)for(const answer of session.items) {
+    const key=answer.recordId+'@'+answer.recordVersion;
+    if(!groups.has(key))groups.set(key,{recordId:answer.recordId,version:answer.recordVersion,keyed:answer.keyed,n:0,correct:0,counts:{}});
+    const g=groups.get(key);g.n++;g.correct+=answer.correct?1:0;g.counts[answer.selected]=(g.counts[answer.selected]||0)+1;
+  }
+  const questions=[...groups.values()].map(g=>{
+    const record=records.find(r=>r.id===g.recordId),current=record?.version===g.version,p=g.correct/g.n,enough=g.n>=CALIBRATION.minResponses;
+    const optionIds=current?record.item.student_question.options.map(o=>o.id):[1,2,3,4];
+    const options=optionIds.map(id=>({id,text:current?record.item.student_question.options.find(o=>o.id===id).text:null,count:g.counts[id]||0,share:(g.counts[id]||0)/g.n,keyed:id===g.keyed}));
+    const label=current?labelsFor(record).difficulty:null,band=enough?pupilBand(p):null,flags=[];
+    if(!enough)flags.push({code:'few_responses',severity:'info',detail:`${g.n} of the ${CALIBRATION.minResponses} responses needed before a difficulty band is shown.`});
+    else {
+      if(label&&band!==label)flags.push({code:'label_differs',severity:'warn',detail:`Pupils found it ${band} (${Math.round(p*100)}% correct) but it is labelled ${label}. A reviewer can correct the label.`});
+      const key=options.find(o=>o.keyed);
+      for(const o of options.filter(o=>!o.keyed)) {
+        if(o.count>(key?.count||0))flags.push({code:'distractor_beats_key',severity:'warn',detail:`More pupils chose option ${o.id} (${o.count}) than the key, option ${g.keyed} (${key?.count||0}). Check the key and the wording.`});
+        else if(o.share<CALIBRATION.weakDistractor)flags.push({code:'weak_distractor',severity:'info',detail:`Option ${o.id} was chosen by ${o.count} of ${g.n} pupils, so it may not be a plausible wrong answer.`});
+      }
+    }
+    return {recordId:g.recordId,title:record?.title||'Question no longer in the bank',version:g.version,current,status:record?.status||null,n:g.n,correct:g.correct,p,interval:wilson(g.correct,g.n),band,label,agreement:band&&label?band===label:null,options,flags};
+  }).sort((a,b)=>b.n-a.n||a.title.localeCompare(b.title));
+  return {sessions:sessions.length,responses:sessions.reduce((s,x)=>s+x.items.length,0),thresholds:CALIBRATION,definitions:{p:'Share of pupils who chose the key for this question version.',interval:'95% Wilson interval for that share.',band:`Easy at ${CALIBRATION.easy*100}% correct or more, Medium from ${CALIBRATION.medium*100}%, Hard below; shown once a version has ${CALIBRATION.minResponses} responses.`,privacy:'Each response holds the question id and version, the chosen option and whether it was correct. No names, accounts or device details are stored. Demo answers are not saved.'},questions};
+}
+export function createPracticeService(store,fixtures,responses=null) {
   const sessions=new Map();
   const activeBank=()=>store.all().filter(eligible);
   const publicQuestion=r=>({id:r.id,version:r.version,title:r.title,grade:r.item.grade,topic:r.item.topic,labels:labelsFor(r),question:r.item.student_question.figure?{...r.item.student_question,figure:pupilFigure(r.item.student_question.figure)}:r.item.student_question});
@@ -60,7 +90,10 @@ export function createPracticeService(store,fixtures) {
     if(session.result){if(session.records.some(r=>answers[r.id]!==session.answers[r.id]))throw new AppError('This attempt is already submitted. Start a new session.',409);return session.result;}
     const items=session.records.map(r=>({id:r.id,selected:answers[r.id],correct:answers[r.id]===r.item.answer.option_id,answer:r.item.answer,steps:r.item.solution_steps||[],distractors:r.item.distractor_rationales,labels:labelsFor(r)}));
     const right=items.filter(i=>i.correct).length;
-    session.answers=structuredClone(answers);session.result={demo:session.demo,correct:right,total:items.length,marks:right*2,maxMarks:items.length*2,items,practiceAgainObjectives:[...new Set(items.filter(i=>!i.correct).flatMap(i=>i.labels.objectives))]};return session.result;
+    // Approved questions only: keep an anonymous response for difficulty calibration.
+    let responseSaved=false;
+    if(!session.demo&&responses)try{responses.add({id:randomUUID(),version:1,at:new Date().toISOString(),items:session.records.map(r=>({recordId:r.id,recordVersion:r.version,selected:answers[r.id],keyed:r.item.answer.option_id,correct:answers[r.id]===r.item.answer.option_id}))});responseSaved=true;}catch{}
+    session.answers=structuredClone(answers);session.result={demo:session.demo,correct:right,total:items.length,marks:right*2,maxMarks:items.length*2,items,practiceAgainObjectives:[...new Set(items.filter(i=>!i.correct).flatMap(i=>i.labels.objectives))],responseSaved};return session.result;
   }
   return {config,start,submit};
 }

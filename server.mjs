@@ -6,7 +6,7 @@ import { randomBytes, randomUUID } from 'node:crypto';
 import { Store, AppError } from './store.mjs';
 import { validateItem, schemaErrors, pupilText } from './validation.mjs';
 import { families, draftSchema, batchBlindSchema, makePlan, retrievalQueries, generationPrompt, batchBlindPrompt, draftToItem, mappingFor } from './model-v2.mjs';
-import { createPracticeService, evaluationReport, compareConditions, labelsFor, difficulties, issueCodes } from './learning.mjs';
+import { createPracticeService, evaluationReport, compareConditions, calibrationReport, labelsFor, difficulties, issueCodes } from './learning.mjs';
 import { createFixtures } from './fixtures.mjs';
 import { providerStatus, runStructured, runJev, makeGenerationPrompt, makeBlindPrompt } from './providers.mjs';
 import { printableRecord } from './export.mjs';
@@ -66,7 +66,9 @@ export function createApp(options = {}) {
   const batchStore = new Store(path.join(path.dirname(store.file), 'evaluations'));
   for(const b of batchStore.all())if(['queued','running'].includes(b.status))batchStore.update(b.id,b.version,x=>({...x,status:'interrupted',error:'Server restarted during the run. Existing results are retained; no automatic retry was made.'}));
   const fixtures = createFixtures();
-  const practice = createPracticeService(store,fixtures);
+  // Anonymous practice responses (question version and chosen option only) for difficulty calibration.
+  const responseStore = new Store(path.join(path.dirname(store.file), 'responses'));
+  const practice = createPracticeService(store,fixtures,responseStore);
   // The source bank is opened per request, so a rebuilt file is used at once and never held open.
   // An explicit data directory (tests, the recorded demo) keeps its bank beside its records.
   const bankFile = options.bankFile || (options.dataDir ? null : process.env.SIMCC_BANK_DB) || path.join(path.dirname(store.file), 'question-bank.sqlite');
@@ -162,7 +164,7 @@ export function createApp(options = {}) {
       const route = url.pathname;
       const mutation = !['GET', 'HEAD'].includes(req.method);
       if (mutation && req.headers['x-csrf-token'] !== csrfToken) throw new AppError('Invalid local session token. Refresh the page.', 403, 'CSRF');
-      if (req.method === 'GET' && route === '/api/bootstrap') { const bank = bankInfo(), batches = batchStore.all().map(b => evaluationReport(b, store.all())); return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches, comparison: compareConditions(batches), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })), bank: { available: bank.available, label: bank.label || null, questions: bank.counts?.questions ?? null } }); }
+      if (req.method === 'GET' && route === '/api/bootstrap') { const bank = bankInfo(), batches = batchStore.all().map(b => evaluationReport(b, store.all())); return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches, comparison: compareConditions(batches), calibration: calibrationReport(store.all(), responseStore.all()), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })), bank: { available: bank.available, label: bank.label || null, questions: bank.counts?.questions ?? null } }); }
       if (req.method === 'GET' && route === '/api/bank') return send(200, bankInfo());
       if (req.method === 'GET' && route === '/api/bank/questions') {
         const p = url.searchParams, filters = { q: p.get('q') || '', topic: p.get('topic') || '', level: p.get('level') || '', flag: p.get('flag') || '', limit: Number(p.get('limit') || 25), offset: Number(p.get('offset') || 0) };
@@ -189,7 +191,9 @@ export function createApp(options = {}) {
       if(req.method==='GET'&&route==='/api/practice/config')return send(200,{csrfToken,curriculum,...practice.config()});
       if(req.method==='POST'&&route==='/api/practice/start')return send(200,practice.start(await readBody(req)));
       if(req.method==='POST'&&/^\/api\/practice\/[^/]+\/submit$/.test(route))return send(200,practice.submit(route.split('/')[3],await readBody(req)));
-      if(req.method==='GET'&&route==='/api/evaluations'){const batches=batchStore.all().map(b=>evaluationReport(b,store.all()));return send(200,{batches,comparison:compareConditions(batches)});}
+      if(req.method==='GET'&&route==='/api/evaluations'){const batches=batchStore.all().map(b=>evaluationReport(b,store.all()));return send(200,{batches,comparison:compareConditions(batches),calibration:calibrationReport(store.all(),responseStore.all())});}
+      if(req.method==='GET'&&route==='/api/calibration')return send(200,calibrationReport(store.all(),responseStore.all()));
+      if(req.method==='GET'&&route==='/api/calibration/export')return send(200,{exportedAt:now(),purpose:'Anonymous practice responses for difficulty calibration. No names, accounts or device details.',report:calibrationReport(store.all(),responseStore.all()),sessions:responseStore.all()},{'Content-Disposition':'attachment; filename="simcc-pupil-responses.json"'});
       if(req.method==='GET'&&/^\/api\/evaluations\/[^/]+\/export$/.test(route))return send(200,evaluationReport(batchStore.get(route.split('/')[3]),store.all()),{'Content-Disposition':'attachment; filename="simcc-evaluation.json"'});
       if(req.method==='GET'&&route==='/api/feedback/export')return send(200,{exportedAt:now(),purpose:'Reviewer feedback for later analysis; not automatically accepted training data.',records:store.all().filter(r=>r.reviewEvents.length).map(r=>({id:r.id,version:r.version,status:r.status,item:r.item,labels:labelsFor(r),events:r.reviewEvents}))},{'Content-Disposition':'attachment; filename="simcc-reviewer-feedback.json"'});
       if(req.method==='POST'&&route==='/api/batches') {

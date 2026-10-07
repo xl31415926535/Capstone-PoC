@@ -21,8 +21,8 @@ test('recorded original has one conditional solution but no human or originality
 });
 
 test('three deliberate demonstration faults are blocked and truthfully marked', () => {
-  const expected = { 'wrong-answer': 'answer_matches_logic', 'missing-assumption': 'assumptions', 'duplicate-options': 'options' };
-  for (const fixture of createFixtures().slice(1)) {
+  const expected = { 'wrong-answer': 'answer_matches_logic', 'missing-assumption': 'assumptions', 'duplicate-options': 'options', 'circuit-wrong-key': 'circuit_logic' };
+  for (const fixture of createFixtures().filter(f => f.mode === 'fixture')) {
     const checks = validateItem(fixture.item);
     assert.equal(fixture.mode, 'fixture');
     assert.ok(checks.blocking > 0, fixture.id);

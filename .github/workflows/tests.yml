@@ -34,5 +34,6 @@ jobs:
           node --check public/app.js
           node --check public/extensions.js
           node --check public/practice.js
+          node --check circuit.mjs
       - name: Run offline tests
         run: npm test

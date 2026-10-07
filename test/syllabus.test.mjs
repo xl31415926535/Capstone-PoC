@@ -10,7 +10,7 @@ const curriculum = JSON.parse(fs.readFileSync(new URL('../curriculum.json', impo
 const draft = (patch = {}) => ({
   title: 'Test-only series bulbs question', family: 'circuit_prediction', difficulty: 'Medium', skill: 'Application',
   context: 'One battery is connected to one bulb in a closed loop. A second identical bulb is then added in series in the same loop. All contacts are secure and every part works.',
-  question: 'How does the brightness of the first bulb change?', table: { columns: [], rows: [] },
+  question: 'How does the brightness of the first bulb change?', table: { columns: [], rows: [] }, figure: { panels: [] }, verification: { kind: 'none', options: [], targetLit: [] },
   options: [{ id: 1, text: 'It becomes dimmer.' }, { id: 2, text: 'It becomes brighter.' }, { id: 3, text: 'It stays the same.' }, { id: 4, text: 'It goes out.' }],
   answer: { optionId: 1, explanation: 'Adding a bulb in series makes the current in the loop smaller, so each bulb is dimmer.', steps: ['Both bulbs are in one loop.', 'More bulbs in series means a smaller current.'], distractors: [{ optionId: 2, reason: 'A smaller current cannot make the bulb brighter.' }, { optionId: 3, reason: 'The current changes when a bulb is added in series.' }, { optionId: 4, reason: 'The loop is still closed, so current still flows.' }] },
   mappings: [{ objectiveId: 'P5-ELEC-VARIABLES', evidence: 'Predicts the effect of adding a bulb in series.' }],

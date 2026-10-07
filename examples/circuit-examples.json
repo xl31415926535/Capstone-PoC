@@ -1,0 +1,390 @@
+{
+ "note": "Constructed by the project team to demonstrate circuit figures in the no-API demo. These are not model output and not past-paper questions. Each loads as a v2 draft; the blind solve still has to run before approval.",
+ "drafts": [
+  {
+   "id": "circuit-brightness",
+   "label": "Constructed: brightest of four circuits",
+   "description": "Constructed example with four circuit diagrams. The server solves each circuit and confirms that only the keyed circuit has the brightest bulb.",
+   "draft": {
+    "title": "Batteries and bulbs in four circuits",
+    "family": "circuit_prediction",
+    "difficulty": "Medium",
+    "skill": "Application",
+    "context": "Mei Ling builds the four circuits shown. All the batteries are identical and all the bulbs are identical. Every bulb works and all the connections are secure.",
+    "question": "In which circuit does bulb P light up most brightly?",
+    "table": {
+     "columns": [],
+     "rows": []
+    },
+    "figure": {
+     "panels": [
+      {
+       "label": "A",
+       "elements": [
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "P",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "Q",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        }
+       ]
+      },
+      {
+       "label": "B",
+       "elements": [
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "P",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        }
+       ]
+      },
+      {
+       "label": "C",
+       "elements": [
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "P",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "elements": [
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "P",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "Q",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        }
+       ]
+      }
+     ]
+    },
+    "verification": {
+     "kind": "brightest_circuit",
+     "options": [
+      {
+       "optionId": 1,
+       "bulbs": [],
+       "circuit": "A",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 2,
+       "bulbs": [],
+       "circuit": "B",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 3,
+       "bulbs": [],
+       "circuit": "C",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 4,
+       "bulbs": [],
+       "circuit": "D",
+       "closedSwitches": []
+      }
+     ],
+     "targetLit": []
+    },
+    "options": [
+     {
+      "id": 1,
+      "text": "Circuit A"
+     },
+     {
+      "id": 2,
+      "text": "Circuit B"
+     },
+     {
+      "id": 3,
+      "text": "Circuit C"
+     },
+     {
+      "id": 4,
+      "text": "Circuit D"
+     }
+    ],
+    "answer": {
+     "optionId": 2,
+     "explanation": "Circuit B has two batteries in series and only one bulb, so the current through bulb P is the largest and P is the brightest. More batteries in series give a larger current; more bulbs in series give a smaller current.",
+     "steps": [
+      "Count the batteries in series: B and D have two; A and C have one.",
+      "Count the bulbs in series: B and C have one; A and D have two.",
+      "B has more batteries than C and fewer bulbs than D, so bulb P in B has the largest current."
+     ],
+     "distractors": [
+      {
+       "optionId": 1,
+       "reason": "Circuit A has one battery and two bulbs in series, so it has the smallest current of the four."
+      },
+      {
+       "optionId": 3,
+       "reason": "Circuit C has one battery and one bulb; the second battery in series in Circuit B makes the bulb brighter."
+      },
+      {
+       "optionId": 4,
+       "reason": "Circuit D has two batteries but also two bulbs in series, so bulb P is about as bright as in Circuit C, not as bright as in Circuit B."
+      }
+     ]
+    },
+    "mappings": [
+     {
+      "objectiveId": "P5-ELEC-VARIABLES",
+      "evidence": "Compares how the number of batteries in series and the number of bulbs in series change how brightly a bulb lights."
+     },
+     {
+      "objectiveId": "P5-ELEC-DIAGRAMS",
+      "evidence": "Reads four circuit diagrams to predict what each built circuit does."
+     }
+    ],
+    "design": {
+     "reasoningTask": "Combine two variables read from diagrams (batteries in series, bulbs in series) to find the brightest bulb.",
+     "requiredKnowledge": [
+      "More batteries in series give a larger current.",
+      "More bulbs in series give a smaller current."
+     ],
+     "originalityRationale": "Constructed by the project team to demonstrate the figure checker. It follows a common textbook comparison and makes no originality claim."
+    }
+   }
+  },
+  {
+   "id": "circuit-switch",
+   "label": "Constructed: bulbs with an open switch",
+   "description": "Constructed example with a parallel branch and an open switch. The server solves the circuit and confirms that only the keyed option lists the bulbs that light.",
+   "draft": {
+    "title": "Which bulbs light with the switch open?",
+    "family": "circuit_prediction",
+    "difficulty": "Easy",
+    "skill": "Application",
+    "context": "Ravi sets up the circuit shown. All the bulbs are identical and work, and all the connections are secure. Switch S1 is open.",
+    "question": "Which bulbs light up?",
+    "table": {
+     "columns": [],
+     "rows": []
+    },
+    "figure": {
+     "panels": [
+      {
+       "label": "",
+       "elements": [
+        {
+         "kind": "battery",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "bulb",
+         "label": "A",
+         "state": "none",
+         "material": "none",
+         "branches": []
+        },
+        {
+         "kind": "parallel",
+         "label": "",
+         "state": "none",
+         "material": "none",
+         "branches": [
+          [
+           {
+            "kind": "bulb",
+            "label": "B",
+            "state": "none",
+            "material": "none"
+           }
+          ],
+          [
+           {
+            "kind": "switch",
+            "label": "S1",
+            "state": "open",
+            "material": "none"
+           },
+           {
+            "kind": "bulb",
+            "label": "C",
+            "state": "none",
+            "material": "none"
+           }
+          ]
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "verification": {
+     "kind": "lit_bulbs",
+     "options": [
+      {
+       "optionId": 1,
+       "bulbs": [
+        "A"
+       ],
+       "circuit": "",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 2,
+       "bulbs": [
+        "A",
+        "B"
+       ],
+       "circuit": "",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 3,
+       "bulbs": [
+        "B",
+        "C"
+       ],
+       "circuit": "",
+       "closedSwitches": []
+      },
+      {
+       "optionId": 4,
+       "bulbs": [
+        "A",
+        "B",
+        "C"
+       ],
+       "circuit": "",
+       "closedSwitches": []
+      }
+     ],
+     "targetLit": []
+    },
+    "options": [
+     {
+      "id": 1,
+      "text": "A only"
+     },
+     {
+      "id": 2,
+      "text": "A and B only"
+     },
+     {
+      "id": 3,
+      "text": "B and C only"
+     },
+     {
+      "id": 4,
+      "text": "A, B and C"
+     }
+    ],
+    "answer": {
+     "optionId": 2,
+     "explanation": "Bulbs A and B are in a closed circuit with the battery, so they light. The branch with bulb C is broken by the open switch S1, so no current flows through bulb C.",
+     "steps": [
+      "Trace a closed path from the battery through bulb A.",
+      "After bulb A, the path through bulb B is closed, so A and B light.",
+      "The path through bulb C has the open switch S1, so C does not light."
+     ],
+     "distractors": [
+      {
+       "optionId": 1,
+       "reason": "Bulb A is not alone in a closed path; the branch with bulb B completes the circuit too."
+      },
+      {
+       "optionId": 3,
+       "reason": "Bulb A is in the main loop, so it lights whenever any other bulb lights; bulb C is in the open branch."
+      },
+      {
+       "optionId": 4,
+       "reason": "Switch S1 is open, so no current flows through bulb C."
+      }
+     ]
+    },
+    "mappings": [
+     {
+      "objectiveId": "P5-ELEC-CLOSED",
+      "evidence": "Decides which bulbs are in a closed circuit when a switch is open."
+     },
+     {
+      "objectiveId": "P5-ELEC-DIAGRAMS",
+      "evidence": "Reads a circuit diagram with a parallel branch and a switch."
+     }
+    ],
+    "design": {
+     "reasoningTask": "Trace closed paths in a diagram with a parallel branch and an open switch.",
+     "requiredKnowledge": [
+      "A bulb lights only in a closed circuit.",
+      "An open switch breaks the path in its branch."
+     ],
+     "originalityRationale": "Constructed by the project team to demonstrate the figure checker. It follows a common textbook pattern and makes no originality claim."
+    }
+   }
+  }
+ ]
+}

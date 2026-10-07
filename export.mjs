@@ -1,4 +1,13 @@
+import { renderFigureSvg, figureMaterials } from './circuit.mjs';
+
 export const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+const figure = q => {
+  if (!q.figure?.panels?.length) return '';
+  try {
+    const materials = figureMaterials(q.figure);
+    return renderFigureSvg(q.figure) + (materials.length ? `<p>Solver assumes ${escapeHtml(materials.join('; '))}. Pupils see only the labels.</p>` : '');
+  } catch { return '<p>The circuit figure could not be drawn.</p>'; }
+};
 export function printableRecord(record) {
   const e = escapeHtml, item = record.item, q = item.student_question || {};
   const rows = (q.observations || []).map(o => `<tr><td>${e(o.test)}</td><td>${e(o.gap_X)}</td><td>${e(o.gap_Y)}</td><td>${e(o.bulb)}</td></tr>`).join('');
@@ -8,7 +17,7 @@ export function printableRecord(record) {
   <p>SIMCC / SCIENCE STUDIO · PROTOTYPE REVIEW SHEET</p><h1>${e(record.title)}</h1>
   <div class="status"><strong>${e(record.status.toUpperCase())} · Version ${e(record.version)}</strong><br>${e(record.provenance.label)}<br>Record ${e(record.id)} · ${e(record.updatedAt)}</div>
   <p>${e(item.grade)} / ${e(item.stream)} / ${e(item.topic)} · ${e(item.format)} · Difficulty ${e(item.difficulty_estimate)} (provisional)</p>
-  <h2>Student question</h2><div class="stem">${e(q.stem)}</div><p>${e(q.diagram_alt)}</p>
+  <h2>Student question</h2><div class="stem">${e(q.stem)}</div>${figure(q)}<p>${e(q.diagram_alt)}</p>
   ${rows?`<table><thead><tr><th>Test</th><th>Gap X</th><th>Gap Y</th><th>Bulb</th></tr></thead><tbody>${rows}</tbody></table>`:''}
   ${q.table?.rows?.length?`<table><thead><tr>${q.table.columns.map(c=>`<th>${e(c)}</th>`).join('')}</tr></thead><tbody>${q.table.rows.map(row=>`<tr>${row.map(cell=>`<td>${e(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table>`:''}
   <p><strong>${e(q.question)}</strong></p><ol>${(q.options || []).map(o => `<li value="${e(o.id)}">${e(o.text)}</li>`).join('')}</ol>

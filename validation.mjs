@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { screenText, screeningRules } from './syllabus.mjs';
+import { verifyFigure } from './circuit.mjs';
 
 const schema = JSON.parse(readFileSync(new URL('./schema.json', import.meta.url), 'utf8'));
 // Generated model output must never claim approval. Persisted records, however,
@@ -169,7 +170,11 @@ export function validateItem(item, corpusRecords = []) {
     const table=q?.table;
     const validTable=Array.isArray(table?.columns)&&Array.isArray(table?.rows)&&table.rows.every(row=>Array.isArray(row)&&row.length===table.columns.length)&&(table.rows.length===0||table.columns.length>0);
     add('data_table','Student-visible data table',validTable?'pass':'fail',validTable?'All supplied rows have the declared number of columns.':'Table rows must match the declared columns.');
-    add('circuit_logic','Deterministic scientific inference','not_run','This open-form reasoning task is outside the legacy Boolean checker. A blind solve and academic review are required; no symbolic proof is claimed.');
+    if(q?.figure?.panels?.length) {
+      const verified=verifyFigure(q.figure,item.figure_check,options,item.answer?.option_id);
+      logic=verified.solution;
+      add('circuit_logic','Circuit solved from the figure',verified.status,verified.detail);
+    } else add('circuit_logic','Deterministic scientific inference','not_run','This open-form reasoning task is outside the legacy Boolean checker. A blind solve and academic review are required; no symbolic proof is claimed.');
     add('design_review','Reasoning design and novelty','warn','The design rationale is a model claim. Compare the reasoning task, information structure and distractors with source questions; a low word-overlap score cannot establish originality.');
   } else {
   const stem = typeof q?.stem === 'string' ? q.stem : '';

@@ -215,7 +215,7 @@ export function createApp(options = {}) {
         if (body.provider === 'replay') {
           const fixture = fixtures.find(f => f.id === (body.fixtureId || 'original'));
           if (!fixture) throw new AppError('Unknown recorded example.');
-          return send(202, job(async (_, stage) => { stage('Loading recorded example and executing local checks'); return addRecord(fixture.item, { mode: fixture.mode, provider: 'recorded', model: null, label: fixture.mode === 'fixture' ? 'Deliberate validation test · ' + fixture.label : 'Recorded original example · no API call', durationMs: 0, usage: null, sourceItemId: fixture.item.item_id }, fixture.label); }));
+          return send(202, job(async (_, stage) => { stage('Loading recorded example and executing local checks'); return addRecord(fixture.item, { mode: fixture.mode, provider: 'recorded', model: null, label: fixture.mode === 'fixture' ? 'Deliberate validation test · ' + fixture.label : fixture.mode === 'constructed' ? 'Constructed example written by the project team · not model output' : 'Recorded original example · no API call', durationMs: 0, usage: null, sourceItemId: fixture.item.item_id }, fixture.label); }));
         }
         return send(202, job(async (jobId, stage) => {
           stage('Preparing verified curriculum context');
@@ -307,6 +307,8 @@ export function createApp(options = {}) {
         const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/extensions.js':['extensions.js','text/javascript'], '/practice':['practice.html','text/html'], '/practice.js':['practice.js','text/javascript'] };
         if (route === '/favicon.ico') { res.writeHead(204, commonHeaders); return res.end(); }
         if (files[route]) { const [file, type] = files[route]; return send(200, fs.readFileSync(path.join(root, 'public', file), 'utf8'), { 'Content-Type': type + '; charset=utf-8' }); }
+        // The circuit module is shared by the server and both pages.
+        if (route === '/circuit.mjs') return send(200, fs.readFileSync(path.join(root, 'circuit.mjs'), 'utf8'), { 'Content-Type': 'text/javascript; charset=utf-8' });
       }
       throw new AppError('Not found.', 404);
     } catch (error) {

@@ -1,5 +1,6 @@
 import { randomUUID, randomInt } from 'node:crypto';
 import { AppError } from './store.mjs';
+import { pupilFigure } from './circuit.mjs';
 export const difficulties=['Easy','Medium','Hard'];
 export const issueCodes=['scientific_error','ambiguous','superficial_rewrite','curriculum','difficulty','language','other'];
 export function labelsFor(record) {
@@ -20,16 +21,16 @@ export function evaluationReport(batch, records) {
 export function createPracticeService(store,fixtures) {
   const sessions=new Map();
   const activeBank=()=>store.all().filter(eligible);
-  const publicQuestion=r=>({id:r.id,version:r.version,title:r.title,grade:r.item.grade,topic:r.item.topic,labels:labelsFor(r),question:r.item.student_question});
+  const publicQuestion=r=>({id:r.id,version:r.version,title:r.title,grade:r.item.grade,topic:r.item.topic,labels:labelsFor(r),question:r.item.student_question.figure?{...r.item.student_question,figure:pupilFigure(r.item.student_question.figure)}:r.item.student_question});
   function config(){const records=activeBank();return {available:records.length,difficulties:[...new Set(records.map(r=>labelsFor(r).difficulty))],objectives:[...new Set(records.flatMap(r=>labelsFor(r).objectives))],skills:[...new Set(records.map(r=>labelsFor(r).skill))]};}
   function start(body){
     for(const [id,s] of sessions)if(Date.now()-s.createdAt>3600000)sessions.delete(id);
     if(sessions.size>=100)throw new AppError('Too many practice sessions; retry after older sessions expire.',429);
     const count=body.count??5;if(!Number.isInteger(count)||count<1||count>10)throw new AppError('Practice quantity must be 1–10.');
     const demo=body.demo===true;
-    let records=demo?[{id:'recorded-practice-demo',version:1,title:'Unreviewed demonstration — not the approved bank',item:fixtures.find(f=>f.id==='original').item}]:activeBank().filter(r=>{const l=labelsFor(r);return (!body.difficulty||l.difficulty===body.difficulty)&&(!body.objective||l.objectives.includes(body.objective))&&(!body.skill||l.skill===body.skill);});
+    let records=demo?[{id:'recorded-practice-demo',version:1,title:'Unreviewed demonstration — not the approved bank',item:fixtures.find(f=>f.id==='original').item},{id:'constructed-circuit-demo',version:1,title:'Unreviewed demonstration with a circuit diagram',item:fixtures.find(f=>f.id==='circuit-switch').item}]:activeBank().filter(r=>{const l=labelsFor(r);return (!body.difficulty||l.difficulty===body.difficulty)&&(!body.objective||l.objectives.includes(body.objective))&&(!body.skill||l.skill===body.skill);});
     if(!records.length)throw new AppError('No approved questions match these filters. Ask a reviewer to approve items first.',404,'EMPTY_BANK');
-    for(let i=records.length-1;i>0;i--){const j=randomInt(i+1);[records[i],records[j]]=[records[j],records[i]];}
+    if(!demo)for(let i=records.length-1;i>0;i--){const j=randomInt(i+1);[records[i],records[j]]=[records[j],records[i]];}
     records=records.slice(0,count);
     const id=randomUUID();sessions.set(id,{records,createdAt:Date.now(),demo,result:null,answers:null});
     return {sessionId:id,demo,label:demo?'Unreviewed recorded demonstration. This session is separate from the approved bank.':'Practice from approved current versions.',requested:count,returned:records.length,questions:records.map(publicQuestion)};

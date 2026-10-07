@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { screenText, screeningRules } from './syllabus.mjs';
 
 const schema = JSON.parse(readFileSync(new URL('./schema.json', import.meta.url), 'utf8'));
 // Generated model output must never claim approval. Persisted records, however,
@@ -13,7 +14,9 @@ persistedSchema.properties.review_record.properties.human_reviewer = { type: ['s
 persistedV2.properties.status = persistedSchema.properties.status;
 persistedV2.properties.review_record = persistedSchema.properties.review_record;
 const LETTERS = ['P', 'Q', 'R'];
-const MAPPINGS = new Set(['P5-ELEC-CLOSED', 'P5-ELEC-MATERIALS', 'PSLE2026-AOII-DATA']);
+const curriculum = JSON.parse(readFileSync(new URL('./curriculum.json', import.meta.url), 'utf8'));
+const OBJECTIVES = curriculum.objectives.map(o => o.id);
+const MAPPINGS = new Set([...OBJECTIVES, 'PSLE2026-AOII-DATA']);
 const normalize = value => typeof value === 'string' ? value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ') : '';
 const nonblank = value => typeof value === 'string' && value.trim().length > 0;
 const canonicalStem = 'makes a circuit with one battery, one bulb and two gaps, X and Y, in the same loop. She has three strips, P, Q and R. Each strip is either a good electrical conductor or an electrical insulator. In each test, she places one strip across X and another across Y. Each strip touches both wire ends securely. The battery, bulb and wires work properly in both tests. Apart from the strips shown below, the circuit is unchanged.';
@@ -81,6 +84,26 @@ function questionText(item) {
   ].filter(s => typeof s === 'string').join(' ');
 }
 
+// Everything a pupil or reviewer reads, for screening against syllabus exclusions.
+function reviewText(item) {
+  return [questionText(item), item?.answer?.explanation_en,
+    ...(Array.isArray(item?.distractor_rationales) ? item.distractor_rationales.map(r => r?.issue) : []),
+    ...(Array.isArray(item?.solution_steps) ? item.solution_steps : []),
+    ...(Array.isArray(item?.design?.requiredKnowledge) ? item.design.requiredKnowledge : []),
+  ].filter(s => typeof s === 'string').join('.\n');
+}
+
+function excludedContent(item) {
+  const hits = screenText(reviewText(item));
+  const blocked = hits.filter(h => h.severity === 'block');
+  const describe = list => list.map(h => `"${h.terms.join('", "')}" (${h.source === 'syllabus' ? `syllabus p.${h.pages.join(', p.')}: not required: ` : 'pilot scope: '}${h.summary})`).join('; ');
+  const syllabusRules = screeningRules.filter(r => r.source === 'syllabus' && (r.block.length || r.flag.length)).length;
+  const scopeRules = screeningRules.filter(r => r.source === 'curriculum').length;
+  if (blocked.length) return { status: 'fail', hits, detail: `Uses content outside the syllabus scope: ${describe(blocked)}.` + (hits.length > blocked.length ? ` Also check: ${describe(hits.filter(h => h.severity !== 'block'))}.` : '') };
+  if (hits.length) return { status: 'warn', hits, detail: `Check whether the item needs this: ${describe(hits)}. A listed term can appear for a good reason, so this is a warning only.` };
+  return { status: 'pass', hits, detail: `No match for the term patterns of ${syllabusRules} syllabus "not required" notes and ${scopeRules} pilot scope rules. Term screening cannot judge every concept; the reviewer still checks scope.` };
+}
+
 function shingles(text) {
   const tokens = normalize(text).split(' ').filter(Boolean);
   const result = new Set();
@@ -126,7 +149,7 @@ export function validateItem(item, corpusRecords = []) {
   const sourceIds = new Set((Array.isArray(item?.sources) ? item.sources : []).map(s => s?.id));
   const idsMapped = mappings.map(m => m?.internal_mapping_id);
   const v2 = item?.model_version === 'science-v2';
-  const mappingOk = (v2 ? idsMapped.some(id => ['P5-ELEC-CLOSED','P5-ELEC-MATERIALS'].includes(id)) : ['P5-ELEC-CLOSED', 'P5-ELEC-MATERIALS'].every(id => idsMapped.includes(id))) && new Set(idsMapped).size === mappings.length && mappings.every(m => MAPPINGS.has(m?.internal_mapping_id) && sourceIds.has(m?.source_id) && nonblank(m?.item_evidence) && nonblank(m?.outcome_paraphrase) && (m.internal_mapping_id.startsWith('P5-') ? m.source_id === 'MOE-2023' && m.printed_page === 59 && m.official_code === null : m.source_id === 'SEAB-2026' && m.pdf_page === 1));
+  const mappingOk = (v2 ? idsMapped.some(id => OBJECTIVES.includes(id)) : ['P5-ELEC-CLOSED', 'P5-ELEC-MATERIALS'].every(id => idsMapped.includes(id))) && new Set(idsMapped).size === mappings.length && mappings.every(m => MAPPINGS.has(m?.internal_mapping_id) && sourceIds.has(m?.source_id) && nonblank(m?.item_evidence) && nonblank(m?.outcome_paraphrase) && (m.internal_mapping_id.startsWith('P5-') ? m.source_id === 'MOE-2023' && m.printed_page === 59 && m.official_code === null : m.source_id === 'SEAB-2026' && m.pdf_page === 1));
   add('syllabus_mapping', 'Known syllabus mappings and evidence', mappingOk ? 'pass' : 'fail', mappingOk ? 'The mapped P5 electricity objectives include page 59 references and item evidence. Label membership is checked; semantic alignment still needs a teacher.' : (v2?'Require at least one relevant P5 electricity objective,':'Require both internal P5 electricity labels,')+' MOE page 59 source references, nonblank evidence, and no unknown or duplicate mappings.');
   const sources = Array.isArray(item?.sources) ? item.sources : [];
   const approvedUrls = {
@@ -185,6 +208,8 @@ export function validateItem(item, corpusRecords = []) {
     add('answer_matches_logic', 'Answer agrees with inferred properties', keyCorrect ? 'pass' : 'fail', keyCorrect ? 'The keyed option and listed conductor/insulator sets agree with the unique conditional solution. Explanation prose is not automatically certified.' : 'The keyed option or stated conductor/insulator sets do not match a unique supported solution.');
   }
   }
+  const exclusion = excludedContent(item);
+  add('excluded_content', 'Syllabus exclusions and pilot scope', exclusion.status, exclusion.detail);
   const rationales = Array.isArray(item?.distractor_rationales) ? item.distractor_rationales : [];
   const expectedDistractors = options.filter(o => o?.id !== item?.answer?.option_id).map(o => o?.id);
   const rationaleOk = rationales.length === 3 && new Set(rationales.map(r => r?.option_id)).size === 3 && rationales.every(r => expectedDistractors.includes(r?.option_id) && nonblank(r?.issue));

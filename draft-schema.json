@@ -162,8 +162,11 @@
                 "objectiveId": {
                   "type": "string",
                   "enum": [
+                    "P5-ELEC-SYSTEM",
                     "P5-ELEC-CLOSED",
-                    "P5-ELEC-MATERIALS"
+                    "P5-ELEC-MATERIALS",
+                    "P5-ELEC-DIAGRAMS",
+                    "P5-ELEC-VARIABLES"
                   ]
                 },
                 "evidence": {
@@ -177,7 +180,7 @@
               ]
             },
             "minItems": 1,
-            "maxItems": 2
+            "maxItems": 3
           },
           "design": {
             "type": "object",

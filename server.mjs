@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { Store, AppError } from './store.mjs';
 import { validateItem, schemaErrors } from './validation.mjs';
-import { families, draftSchema, batchBlindSchema, makePlan, generationPrompt, batchBlindPrompt, draftToItem } from './model-v2.mjs';
+import { families, draftSchema, batchBlindSchema, makePlan, generationPrompt, batchBlindPrompt, draftToItem, mappingFor } from './model-v2.mjs';
 import { createPracticeService, evaluationReport, labelsFor, difficulties, issueCodes } from './learning.mjs';
 import { createFixtures } from './fixtures.mjs';
 import { providerStatus, runStructured, runJev, makeGenerationPrompt, makeBlindPrompt } from './providers.mjs';
@@ -292,9 +292,8 @@ export function createApp(options = {}) {
             const record=store.update(id,body.version,r=>{
               const before=labelsFor(r);r.version++;r.status='draft';r.blindReview=null;r.jevReview=null;
               r.labels={difficulty:body.difficulty,objectives:body.objectives,skill:body.skill.trim(),reviewed:true};
-              const base=fixtures.find(f=>f.id==='original').item;
               r.item.difficulty_estimate=body.difficulty;r.item.skill=body.skill.trim();
-              r.item.syllabus_mapping=body.objectives.map(objective=>({...base.syllabus_mapping.find(m=>m.internal_mapping_id===objective),item_evidence:r.item.syllabus_mapping.find(m=>m.internal_mapping_id===objective)?.item_evidence||'Mapping added by academic reviewer: '+body.note.trim()}));
+              r.item.syllabus_mapping=body.objectives.map(objective=>({...mappingFor(objective,curriculum),item_evidence:r.item.syllabus_mapping.find(m=>m.internal_mapping_id===objective)?.item_evidence||'Mapping added by academic reviewer: '+body.note.trim()}));
               r.item.subtopics=body.objectives.map(id=>curriculum.objectives.find(o=>o.id===id).title);
               r.item=normalizePending(r.item,r.provenance,r.version,id);
               r.reviewEvents.push({at:now(),action:'labels_corrected',reviewer:body.reviewer.trim(),note:body.note.trim(),version:r.version,before,after:r.labels,attestations:null});

@@ -134,7 +134,7 @@ function compareCorpus(item, corpusRecords) {
 // and numbers, so that renaming bulbs or changing values does not hide a copy.
 // The score is the share of the shorter text's word pairs that the other text
 // repeats. On the project bank, renamed or reordered copies of real questions
-// scored 0.8 to 1.0, and the recorded examples at most 0.16 against any bank question.
+// scored 0.89 to 1.0, and the recorded examples at most 0.16 against any bank question.
 export const SOURCE_OVERLAP = { fail: { score: 0.6, shared: 15 }, warn: { score: 0.35, shared: 8 } };
 const maskToken = token => /^\d+$/.test(token) ? '#' : /^[a-z]\d{0,2}$/.test(token) ? '_' : token;
 function wordPairs(text) {

@@ -48,8 +48,9 @@ export function figureErrors(figure) {
     if (!batteries) errors.push(`${name} has no battery.`);
     if (batteries > 4) errors.push(`${name}: use at most four batteries.`);
     if (!parts.some(p => p.kind === 'bulb')) errors.push(`${name} has no bulb.`);
-    const labelled = parts.filter(p => ['bulb', 'switch', 'gap'].includes(p.kind));
-    if (labelled.some(p => !LABEL.test(p.label || ''))) errors.push(`${name}: give every bulb, switch and gap a short label such as A, S1 or X.`);
+    // A bulb the question never names may stay unlabelled, as in printed papers.
+    const labelled = parts.filter(p => ['switch', 'gap'].includes(p.kind) || (p.kind === 'bulb' && p.label));
+    if (labelled.some(p => !LABEL.test(p.label || ''))) errors.push(`${name}: give every switch and gap, and each bulb the question names, a short label such as A, S1 or X.`);
     if (new Set(labelled.map(p => p.label)).size !== labelled.length) errors.push(`${name}: labels must be different within one circuit.`);
     for (const p of parts) {
       if (p.kind === 'switch' && !['open', 'closed'].includes(p.state)) errors.push(`${name}: switch ${p.label} must be open or closed.`);
@@ -131,7 +132,7 @@ export function solvePanel(panel, closedSwitches = null) {
   const current = e => !e.g || !reached.has(e.a) ? 0 : (potential(e.a) - potential(e.b)) * e.g + (e.part.kind === 'battery' ? EMF * e.g : 0);
   const bulbs = edges.filter(e => e.part.kind === 'bulb').map(e => {
     const i = Math.abs(current(e));
-    return { label: e.part.label, lit: i > LIT_CURRENT, brightness: Math.round(i * i * R_BULB * 100) / 100 };
+    return { label: e.part.label || '', lit: i > LIT_CURRENT, brightness: Math.round(i * i * R_BULB * 100) / 100 };
   });
   const batteryCurrent = Math.max(...edges.filter(e => e.part.kind === 'battery').map(e => Math.abs(current(e))));
   return { label: panel.label || '', bulbs, shortCircuit: batteryCurrent > SHORT_CURRENT };
@@ -169,9 +170,10 @@ export function verifyFigure(figure, check, options, keyOptionId) {
   const meanings = new Map((check.options || []).map(o => [o.optionId, o]));
   if (ids.length !== 4 || ids.some(id => !meanings.has(id)) || meanings.size !== ids.length) return { status: 'fail', detail: 'The verification must state what each of the four options means.', solution };
   const multi = ['brightest_circuit', 'dimmest_circuit'].includes(check.kind);
-  if (multi ? figure.panels.length < 2 : figure.panels.length !== 1) return { status: 'fail', detail: multi ? 'Comparing circuits needs two to four labelled panels.' : 'This verification type needs exactly one circuit panel.', solution };
+  const bulbCompare = ['brightest_bulb', 'dimmest_bulb'].includes(check.kind);
+  if (multi ? figure.panels.length < 2 : !bulbCompare && figure.panels.length !== 1) return { status: 'fail', detail: multi ? 'Comparing circuits needs two to four labelled panels.' : 'This verification type needs exactly one circuit panel.', solution };
   const panel = figure.panels[0], solved = panels[0];
-  const bulbs = partsOf(panel).filter(p => p.kind === 'bulb').map(p => p.label);
+  const bulbs = partsOf(panel).filter(p => p.kind === 'bulb' && p.label).map(p => p.label);
   const switches = partsOf(panel).filter(p => p.kind === 'switch').map(p => p.label);
   const fail = detail => ({ status: 'fail', detail, solution });
   let truth, describe, matches, mismatches = [], unread = [];
@@ -183,8 +185,8 @@ export function verifyFigure(figure, check, options, keyOptionId) {
   };
 
   if (check.kind === 'lit_bulbs') {
-    truth = set(solved.bulbs.filter(b => b.lit).map(b => b.label));
-    const unlit = solved.bulbs.filter(b => !b.lit).map(b => b.label);
+    truth = set(solved.bulbs.filter(b => b.lit && b.label).map(b => b.label));
+    const unlit = solved.bulbs.filter(b => !b.lit && b.label).map(b => b.label);
     describe = `${bulbWords(truth)} ${truth.length === 1 ? 'lights' : 'light'}${unlit.length ? `; ${listWords(unlit)} ${unlit.length === 1 ? 'does' : 'do'} not` : ''}`;
     for (const option of options) {
       const mapped = set(meanings.get(option.id).bulbs || []);
@@ -192,20 +194,24 @@ export function verifyFigure(figure, check, options, keyOptionId) {
       textCheck(option, mapped, bulbs, 'bulb');
     }
     matches = options.filter(o => equalSets(set(meanings.get(o.id).bulbs || []), truth)).map(o => o.id);
-  } else if (check.kind === 'brightest_bulb' || check.kind === 'dimmest_bulb') {
+  } else if (bulbCompare) {
     const brightest = check.kind === 'brightest_bulb';
-    if (!brightest && solved.bulbs.some(b => !b.lit)) return fail(`${listWords(solved.bulbs.filter(b => !b.lit).map(b => b.label))} does not light, so "dimmest" is ambiguous.`);
-    const lit = solved.bulbs.filter(b => b.lit);
-    if (!lit.length) return fail('No bulb lights in this circuit.');
+    // The named bulbs are compared, across every panel ("Which of the bulbs, A, B, C or D, ...").
+    const named = panels.flatMap(p => p.bulbs.filter(b => b.label)), known = named.map(b => b.label);
+    if (new Set(known).size !== known.length) return fail('Give each named bulb a different label across the circuits.');
+    const unlit = named.filter(b => !b.lit).map(b => b.label);
+    if (!brightest && unlit.length) return fail(`${listWords(unlit)} ${unlit.length === 1 ? 'does' : 'do'} not light, so "dimmest" is ambiguous.`);
+    const lit = named.filter(b => b.lit);
+    if (!lit.length) return fail('No named bulb lights.');
     const extreme = lit.reduce((a, b) => (brightest ? b.brightness > a.brightness : b.brightness < a.brightness) ? b : a);
     const ties = lit.filter(b => same(b.brightness, extreme.brightness)).map(b => b.label);
     if (ties.length > 1) return fail(`${listWords(ties)} are equally ${brightest ? 'bright' : 'dim'}, so no single bulb is the ${brightest ? 'brightest' : 'dimmest'}.`);
     truth = extreme.label;
-    describe = `bulb ${truth} is the ${brightest ? 'brightest' : 'dimmest'} (${solved.bulbs.map(b => `${b.label} ${b.lit ? b.brightness : 'unlit'}`).join(', ')}; one cell with one bulb = 1)`;
+    describe = `bulb ${truth} is the ${brightest ? 'brightest' : 'dimmest'} (${named.map(b => `${b.label} ${b.lit ? b.brightness : 'unlit'}`).join(', ')}; one cell with one bulb = 1)`;
     for (const option of options) {
       const mapped = meanings.get(option.id).bulbs || [];
-      if (mapped.length !== 1 || !bulbs.includes(mapped[0])) return fail(`Option ${option.id} must be mapped to exactly one bulb in the figure.`);
-      textCheck(option, mapped, bulbs, 'bulb');
+      if (mapped.length !== 1 || !known.includes(mapped[0])) return fail(`Option ${option.id} must be mapped to exactly one named bulb in the figure.`);
+      textCheck(option, mapped, known, 'bulb');
     }
     matches = options.filter(o => meanings.get(o.id).bulbs[0] === truth).map(o => o.id);
   } else if (multi) {
@@ -242,7 +248,7 @@ export function verifyFigure(figure, check, options, keyOptionId) {
       if (closed.some(l => !switches.includes(l))) return fail(`Option ${option.id} closes a switch that is not in the figure.`);
       const result = solvePanel(panel, closed);
       if (result.shortCircuit) return fail(`Closing ${listWords(closed)} (option ${option.id}) short-circuits the battery. Short circuits are outside the P5 scope.`);
-      if (equalSets(set(result.bulbs.filter(b => b.lit).map(b => b.label)), truth)) matches.push(option.id);
+      if (equalSets(set(result.bulbs.filter(b => b.lit && b.label).map(b => b.label)), truth)) matches.push(option.id);
       textCheck(option, closed, switches, 'switch');
     }
   }
@@ -263,11 +269,17 @@ function partName(part, inBranch) {
 }
 function seriesWords(parts, inBranch) {
   const words = [];
+  const unnamedBulb = part => part?.kind === 'bulb' && !part.label;
   for (let i = 0; i < parts.length; i++) {
     if (parts[i].kind === 'battery') {
       let n = 1;
       while (parts[i + n]?.kind === 'battery') n++;
       words.push(n === 1 ? 'a battery' : `${['', '', 'two', 'three', 'four'][n]} batteries in series`);
+      i += n - 1;
+    } else if (unnamedBulb(parts[i])) {
+      let n = 1;
+      while (unnamedBulb(parts[i + n])) n++;
+      words.push(n === 1 ? 'a bulb' : `${['', '', 'two', 'three', 'four', 'five', 'six', 'seven'][n]} bulbs`);
       i += n - 1;
     } else {
       const word = partName(parts[i], inBranch);

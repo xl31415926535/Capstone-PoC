@@ -42,10 +42,30 @@ test('the solver reproduces the P5 rules for batteries and bulbs in series and p
 test('figure structure rules keep batteries in series and require readable labels', () => {
   assert.deepEqual(figureErrors({ panels: [panel([battery(), bulb('A')])] }), []);
   assert.match(figureErrors({ panels: [panel([parallel([battery()], [bulb('A')]), bulb('B')])] }).join(' '), /cannot hold a battery/);
-  assert.match(figureErrors({ panels: [panel([battery(), bulb('')])] }).join(' '), /short label/);
+  assert.deepEqual(figureErrors({ panels: [panel([battery(), bulb(''), bulb('A')])] }), [], 'a bulb the question never names may stay unlabelled');
+  assert.match(figureErrors({ panels: [panel([battery(), bulb('AB')])] }).join(' '), /short label/);
+  assert.match(figureErrors({ panels: [panel([battery(), sw('', 'open'), bulb('A')])] }).join(' '), /short label/);
   assert.match(figureErrors({ panels: [panel([battery(), bulb('A'), bulb('A')])] }).join(' '), /different/);
   assert.match(figureErrors({ panels: [panel([battery(), bulb('A')], 'A'), panel([battery(), bulb('A')], 'A')] }).join(' '), /different letter/);
   assert.match(figureErrors({ panels: [panel([bulb('A'), bulb('B')])] }).join(' '), /no battery/);
+});
+
+test('bulb comparisons cover the named bulbs in every panel and leave unnamed bulbs out', () => {
+  const figure = { panels: [
+    panel([battery(), bulb(''), bulb('P')], 'A'),
+    panel([battery(), parallel([bulb('Q')], [bulb('')])], 'B'),
+    panel([battery(), battery(), bulb('R'), bulb('')], 'C'),
+    panel([battery(), bulb('S')], 'D'),
+  ] };
+  const check = kind => ({ kind, options: ['P', 'Q', 'R', 'S'].map((l, i) => ({ optionId: i + 1, bulbs: [l], circuit: '', closedSwitches: [] })), targetLit: [] });
+  const dimmest = verifyFigure(figure, check('dimmest_bulb'), options(['P', 'Q', 'R', 'S']), 1);
+  assert.equal(dimmest.status, 'pass', dimmest.detail);
+  assert.match(dimmest.detail, /bulb P is the dimmest \(P 0\.25, Q 1, R 1, S 1;/, 'the unnamed bulb beside P is just as dim but is not an option');
+  assert.match(verifyFigure(figure, check('brightest_bulb'), options(['P', 'Q', 'R', 'S']), 2).detail, /Q, R and S are equally bright/);
+  const clash = structuredClone(figure);
+  clash.panels[3].elements[1].label = 'P';
+  assert.match(verifyFigure(clash, check('dimmest_bulb'), options(['P', 'Q', 'R', 'S']), 1).detail, /different label across the circuits/);
+  assert.match(describeFigure(figure), /Circuit A: one loop with a battery, a bulb and bulb P,/);
 });
 
 test('the constructed examples pass and the wrong-key fixture fails on the solved circuit', () => {

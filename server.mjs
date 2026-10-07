@@ -10,11 +10,15 @@ import { createPracticeService, evaluationReport, labelsFor, difficulties, issue
 import { createFixtures } from './fixtures.mjs';
 import { providerStatus, runStructured, runJev, makeGenerationPrompt, makeBlindPrompt } from './providers.mjs';
 import { printableRecord } from './export.mjs';
+import { syllabus } from './syllabus.mjs';
+import { FLAG_CODES, PILOT_TOPIC, bankFileStatus, openBank, bankSummary, searchQuestions, getQuestion, assetData, reviewTag, coverage } from './bank.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const curriculum = JSON.parse(fs.readFileSync(path.join(root, 'curriculum.json'), 'utf8'));
 const maxBody = 200_000;
 const statuses = ['approved', 'changes_requested', 'rejected'];
+const bankSyllabus = { topics: syllabus.topics.map(({ id, theme, level, label }) => ({ id, theme, level, label })), pilotOutcomes: syllabus.topics.find(t => t.id === PILOT_TOPIC).outcomes.filter(o => o.stream === 'standard').map(({ id, text, page }) => ({ id, text, page })) };
+const bankLevels = ['', 'primary', 'secondary', 'mixed', 'unknown'];
 const now = () => new Date().toISOString();
 
 function normalizePending(item, provenance, version = 1, id = null) {
@@ -63,6 +67,15 @@ export function createApp(options = {}) {
   for(const b of batchStore.all())if(['queued','running'].includes(b.status))batchStore.update(b.id,b.version,x=>({...x,status:'interrupted',error:'Server restarted during the run. Existing results are retained; no automatic retry was made.'}));
   const fixtures = createFixtures();
   const practice = createPracticeService(store,fixtures);
+  // The source bank is opened per request, so a rebuilt file is used at once and never held open.
+  // An explicit data directory (tests, the recorded demo) keeps its bank beside its records.
+  const bankFile = options.bankFile || (options.dataDir ? null : process.env.SIMCC_BANK_DB) || path.join(path.dirname(store.file), 'question-bank.sqlite');
+  const withBank = (fn, write = false) => { const db = openBank(bankFile, { write }); try { return fn(db); } finally { db.close(); } };
+  const bankInfo = () => {
+    const status = bankFileStatus(bankFile);
+    if (!status.available) return { ...status, syllabus: bankSyllabus };
+    try { return { ...withBank(bankSummary), syllabus: bankSyllabus }; } catch (error) { return { available: false, reason: error.message, syllabus: bankSyllabus }; }
+  };
   const csrfToken = randomBytes(32).toString('hex');
   const jobs = new Map();
   const providers = options.providerStatus || providerStatus;
@@ -143,7 +156,30 @@ export function createApp(options = {}) {
       const route = url.pathname;
       const mutation = !['GET', 'HEAD'].includes(req.method);
       if (mutation && req.headers['x-csrf-token'] !== csrfToken) throw new AppError('Invalid local session token. Refresh the page.', 403, 'CSRF');
-      if (req.method === 'GET' && route === '/api/bootstrap') return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches:batchStore.all().map(b=>evaluationReport(b,store.all())), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })) });
+      if (req.method === 'GET' && route === '/api/bootstrap') { const bank = bankInfo(); return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches:batchStore.all().map(b=>evaluationReport(b,store.all())), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })), bank: { available: bank.available, label: bank.label || null, questions: bank.counts?.questions ?? null } }); }
+      if (req.method === 'GET' && route === '/api/bank') return send(200, bankInfo());
+      if (req.method === 'GET' && route === '/api/bank/questions') {
+        const p = url.searchParams, filters = { q: p.get('q') || '', topic: p.get('topic') || '', level: p.get('level') || '', flag: p.get('flag') || '', limit: Number(p.get('limit') || 25), offset: Number(p.get('offset') || 0) };
+        if (!Number.isInteger(filters.limit) || filters.limit < 1 || filters.limit > 50 || !Number.isInteger(filters.offset) || filters.offset < 0 || filters.offset > 100000 || filters.q.length > 200 || (filters.topic && !bankSyllabus.topics.some(t => t.id === filters.topic)) || !bankLevels.includes(filters.level) || !['', 'clean', 'figure', ...FLAG_CODES].includes(filters.flag)) throw new AppError('Invalid source bank search.');
+        return send(200, withBank(db => searchQuestions(db, filters)));
+      }
+      const bankRoute = route.match(/^\/api\/bank\/(questions|assets)\/(\d{1,9})(\/review)?$/);
+      if (bankRoute) {
+        const [, kind, idText, review] = bankRoute, id = Number(idText);
+        if (kind === 'assets' && !review && req.method === 'GET') {
+          const asset = withBank(db => assetData(db, id));
+          res.writeHead(200, { ...commonHeaders, 'Content-Type': asset.mediaType, 'Content-Security-Policy': "default-src 'none'" });
+          return res.end(asset.data);
+        }
+        if (kind === 'questions' && !review && req.method === 'GET') return send(200, { question: withBank(db => getQuestion(db, id)) });
+        if (kind === 'questions' && review && req.method === 'POST') { const body = await readBody(req); return send(200, { question: withBank(db => reviewTag(db, id, body), true) }); }
+        throw new AppError('Unsupported method.', 405);
+      }
+      if (req.method === 'GET' && route === '/api/coverage') {
+        const bank = bankInfo();
+        if (bank.available) return send(200, withBank(db => coverage(db, store.all(), curriculum)));
+        return send(200, { ...coverage(null, store.all(), curriculum), bankStatus: { reason: bank.reason } });
+      }
       if(req.method==='GET'&&route==='/api/practice/config')return send(200,{csrfToken,curriculum,...practice.config()});
       if(req.method==='POST'&&route==='/api/practice/start')return send(200,practice.start(await readBody(req)));
       if(req.method==='POST'&&/^\/api\/practice\/[^/]+\/submit$/.test(route))return send(200,practice.submit(route.split('/')[3],await readBody(req)));
@@ -304,7 +340,7 @@ export function createApp(options = {}) {
         throw new AppError('Unsupported method.', 405);
       }
       if (req.method === 'GET') {
-        const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/extensions.js':['extensions.js','text/javascript'], '/practice':['practice.html','text/html'], '/practice.js':['practice.js','text/javascript'] };
+        const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/extensions.js':['extensions.js','text/javascript'], '/practice':['practice.html','text/html'], '/practice.js':['practice.js','text/javascript'], '/bank.js':['bank.js','text/javascript'] };
         if (route === '/favicon.ico') { res.writeHead(204, commonHeaders); return res.end(); }
         if (files[route]) { const [file, type] = files[route]; return send(200, fs.readFileSync(path.join(root, 'public', file), 'utf8'), { 'Content-Type': type + '; charset=utf-8' }); }
         // The circuit module is shared by the server and both pages.
@@ -317,7 +353,7 @@ export function createApp(options = {}) {
   });
   server.requestTimeout = 10000;
   server.headersTimeout = 10000;
-  return { server, store, batchStore, jobs, csrfToken };
+  return { server, store, batchStore, jobs, csrfToken, bankFile };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

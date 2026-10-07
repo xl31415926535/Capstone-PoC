@@ -10,7 +10,9 @@
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test test/*.test.mjs",
-    "demo": "node scripts/start-recorded-demo.mjs"
+    "demo": "node scripts/start-recorded-demo.mjs",
+    "bank:sample": "node scripts/import-bank.mjs --sources examples/bank-sample",
+    "bank:import": "node scripts/import-bank.mjs"
   },
   "repository": {
     "type": "git",

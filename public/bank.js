@@ -1,6 +1,6 @@
 'use strict';
 // Source bank and syllabus coverage pages (data from /api/bank and /api/coverage).
-const bankState={info:null,list:null,filters:{q:'',topic:'',level:'',flag:''},offset:0,selectedId:null,question:null,coverage:null,loading:false,error:null,reviewer:'',reason:''};
+const bankState={info:null,list:null,filters:{q:'',topic:'',level:'',flag:''},offset:0,selectedId:null,keep:null,question:null,coverage:null,loading:false,error:null,reviewer:'',reason:''};
 const TAG_STATUS={suggested:['not_run','Keyword suggestion'],draft:['draft','Curated, awaiting a teacher'],confirmed:['pass','Confirmed by a reviewer'],rejected:['fail','Rejected by a reviewer']};
 const FLAG_LABELS={no_answer:'No answer key',answer_not_in_options:'Key is not an option',few_options:'Too few options',option_noise:'Page text in options',garbled_text:'Damaged text',may_depend_on_image:'Refers to a figure',excluded_content:'Not-required wording'};
 const LEVEL_LABELS={primary:'Primary',secondary:'Secondary',mixed:'Mixed levels',unknown:'Level unknown'};
@@ -18,13 +18,15 @@ async function loadBankList(){
   if(bankState.info.available){
    const params=new URLSearchParams({...Object.fromEntries(Object.entries(bankState.filters).filter(([,v])=>v)),limit:PAGE_SIZE,offset:bankState.offset});
    bankState.list=await api('/api/bank/questions?'+params);
-   if(!bankState.list.questions.some(q=>q.id===bankState.selectedId)){bankState.selectedId=bankState.list.questions[0]?.id??null;bankState.question=null;}
+   if(!bankState.list.questions.some(q=>q.id===bankState.selectedId)&&bankState.keep!==bankState.selectedId){bankState.selectedId=bankState.list.questions[0]?.id??null;bankState.question=null;}
    if(bankState.selectedId&&bankState.question?.id!==bankState.selectedId)bankState.question=(await api(`/api/bank/questions/${bankState.selectedId}`)).question;
   }
  }catch(error){bankState.error=error.message;}
  finally{bankState.loading=false;render();}
 }
 async function selectBankQuestion(id){bankState.selectedId=id;bankState.error=null;try{bankState.question=(await api(`/api/bank/questions/${id}`)).question;}catch(error){bankState.error=error.message;}render();$(`[data-bank-question="${id}"]`)?.focus({preventScroll:true});}
+// Open one source question from a draft's evidence or an evaluation run.
+function openBankQuestion(id){state.page='library';bankState.selectedId=id;bankState.keep=id;bankState.question=null;bankState.list=null;bankState.error=null;render();$('#main')?.focus({preventScroll:true});}
 async function loadCoverage(){bankState.loading=true;render();try{if(!bankState.info)await loadBankInfo();bankState.coverage=await api('/api/coverage');}catch(error){bankState.error=error.message;}finally{bankState.loading=false;render();}}
 
 function bankUnavailable(info){return `<div class="panel"><div class="empty-state"><div class="empty-illustration">${icon('bank')}</div><h2>No source bank loaded</h2><p>${e(info.reason||'The source bank is not available.')}</p>${info.hint?`<p>${e(info.hint)}</p>`:''}<p class="tiny">node scripts/import-bank.mjs --sources examples/bank-sample</p></div></div>`;}
@@ -78,7 +80,8 @@ function coveragePage(){
 function bindBank(){
  if(state.page==='library'&&!bankState.list&&!bankState.loading&&!bankState.error)loadBankList();
  if(state.page==='coverage'&&!bankState.coverage&&!bankState.loading&&!bankState.error)loadCoverage();
- $('#bank-search')?.addEventListener('submit',event=>{event.preventDefault();bankState.filters={q:$('#bank-q').value.trim(),topic:$('#bank-topic').value,level:$('#bank-level').value,flag:$('#bank-flag').value};bankState.offset=0;loadBankList();});
+ $('#bank-search')?.addEventListener('submit',event=>{event.preventDefault();bankState.filters={q:$('#bank-q').value.trim(),topic:$('#bank-topic').value,level:$('#bank-level').value,flag:$('#bank-flag').value};bankState.offset=0;bankState.keep=null;loadBankList();});
+ document.querySelectorAll('[data-open-source]').forEach(b=>b.addEventListener('click',()=>openBankQuestion(Number(b.dataset.openSource))));
  document.querySelectorAll('[data-bank-question]').forEach(b=>b.addEventListener('click',()=>selectBankQuestion(Number(b.dataset.bankQuestion))));
  document.querySelectorAll('[data-bank-page]').forEach(b=>b.addEventListener('click',()=>{bankState.offset=Math.max(0,bankState.offset+Number(b.dataset.bankPage)*PAGE_SIZE);loadBankList();}));
  const form=$('#tag-review');

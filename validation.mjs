@@ -130,7 +130,53 @@ function compareCorpus(item, corpusRecords) {
   return { corpusSize, bestMatchId, score, method: 'Jaccard similarity of normalized 3-token shingles over student-visible question fields; only the supplied local corpus; not an originality certificate.' };
 }
 
-export function validateItem(item, corpusRecords = []) {
+// Overlap with source-bank questions, on word pairs after masking labels (A, S1)
+// and numbers, so that renaming bulbs or changing values does not hide a copy.
+// The score is the share of the shorter text's word pairs that the other text
+// repeats. On the project bank, renamed or reordered copies of real questions
+// scored 0.8 to 1.0, and the recorded examples at most 0.16 against any bank question.
+export const SOURCE_OVERLAP = { fail: { score: 0.6, shared: 15 }, warn: { score: 0.35, shared: 8 } };
+const maskToken = token => /^\d+$/.test(token) ? '#' : /^[a-z]\d{0,2}$/.test(token) ? '_' : token;
+function wordPairs(text) {
+  const tokens = normalize(text).split(' ').filter(Boolean).map(maskToken);
+  const pairs = new Set();
+  for (let i = 0; i + 1 < tokens.length; i++) pairs.add(tokens[i] + ' ' + tokens[i + 1]);
+  return pairs;
+}
+function pairOverlap(a, b) {
+  let shared = 0;
+  for (const pair of a) if (b.has(pair)) shared++;
+  const smaller = Math.min(a.size, b.size);
+  return { shared, score: smaller ? shared / smaller : 0 };
+}
+export const sourceOverlap = (a, b) => pairOverlap(wordPairs(a), wordPairs(b));
+export function overlapStatus({ score, shared }) {
+  if (score >= SOURCE_OVERLAP.fail.score && shared >= SOURCE_OVERLAP.fail.shared) return 'fail';
+  if (score >= SOURCE_OVERLAP.warn.score && shared >= SOURCE_OVERLAP.warn.shared) return 'warn';
+  return 'pass';
+}
+// What a pupil reads, without the generated diagram description.
+export function pupilText(item) {
+  const q = item?.student_question;
+  if (!q) return '';
+  return [q.stem, q.question,
+    ...(Array.isArray(q.observations) ? q.observations.map(o => `${o?.test} ${o?.gap_X} ${o?.gap_Y} ${o?.bulb}`) : []),
+    ...(Array.isArray(q.options) ? q.options.map(o => o?.text) : []),
+    ...(Array.isArray(q.table?.rows) ? q.table.rows.flat() : []),
+  ].filter(s => typeof s === 'string').join(' ');
+}
+function compareSources(item, sources) {
+  if (!Array.isArray(sources)) return null;
+  const target = wordPairs(pupilText(item));
+  let best = null;
+  for (const source of sources) {
+    const overlap = pairOverlap(target, wordPairs(source?.text));
+    if (!best || overlap.score > best.score || (overlap.score === best.score && overlap.shared > best.shared)) best = { ...overlap, id: source.id ?? null, sourceKey: source.sourceKey ?? null, label: source.label || 'Source question' };
+  }
+  return { compared: sources.length, best, status: best ? overlapStatus(best) : 'pass', method: 'Share of the shorter text\'s word pairs repeated in the other, with labels and numbers masked; compared with the source-bank questions that share the most words with the draft and the questions it was generated from.' };
+}
+
+export function validateItem(item, corpusRecords = [], { sourceQuestions } = {}) {
   const results = [];
   const add = (id, label, status, detail) => results.push({ id, label, status, detail });
   const errors = validateItemStructure(item);
@@ -220,7 +266,12 @@ export function validateItem(item, corpusRecords = []) {
   const rationaleOk = rationales.length === 3 && new Set(rationales.map(r => r?.option_id)).size === 3 && rationales.every(r => expectedDistractors.includes(r?.option_id) && nonblank(r?.issue));
   add('rationales', 'Distractor explanation coverage', rationaleOk ? 'pass' : 'fail', rationaleOk ? 'Each unkeyed choice has a nonblank rationale. This checks coverage only; explanation accuracy needs review.' : 'Each of the three unkeyed choices needs exactly one nonblank rationale.');
   add('difficulty', 'Difficulty calibration', 'warn', 'Difficulty is provisional. Model agreement and Boolean solvability do not estimate pupil success rates; no teacher calibration or pupil trial has been performed.');
+  const sourceSimilarity = compareSources(item, sourceQuestions);
+  const best = sourceSimilarity?.best, percent = value => Math.round(value * 100) + '%';
+  if (!sourceSimilarity) add('source_similarity', 'Overlap with source questions', 'not_run', 'No source bank was available, so the draft was not compared with past-paper questions. Build one with npm run bank:import.');
+  else if (!best) add('source_similarity', 'Overlap with source questions', 'pass', 'No source-bank question shares enough words with the draft to compare. Overlap cannot detect a copied idea written in new words.');
+  else add('source_similarity', 'Overlap with source questions', sourceSimilarity.status, sourceSimilarity.status === 'fail' ? `Near copy of ${best.label}: ${percent(best.score)} of word pairs match (${best.shared} pairs, labels and numbers masked). Rewrite the scenario and wording before review.` : sourceSimilarity.status === 'warn' ? `Close to ${best.label}: ${percent(best.score)} of word pairs match (${best.shared} pairs, labels and numbers masked). Check that the draft assesses the idea in a new way rather than rewording the source.` : `Compared with ${sourceSimilarity.compared} source question${sourceSimilarity.compared === 1 ? '' : 's'}; the closest, ${best.label}, shares ${percent(best.score)} of word pairs. Renamed labels and changed numbers still count as matches, but overlap cannot detect a copied idea written in new words.`);
   const similarity = compareCorpus(item, corpusRecords);
   add('local_similarity', 'Limited local corpus similarity', similarity.corpusSize ? 'warn' : 'not_run', similarity.corpusSize ? `Compared with ${similarity.corpusSize} local items; highest 3-token Jaccard score ${(similarity.score * 100).toFixed(1)}%. This is a lexical overlap signal, not global originality clearance.` : 'No comparison items supplied. No originality conclusion can be drawn.');
-  return { ranAt: new Date().toISOString(), blocking: results.filter(r => r.status === 'fail').length, results, logic, similarity };
+  return { ranAt: new Date().toISOString(), blocking: results.filter(r => r.status === 'fail').length, results, logic, similarity, sourceSimilarity };
 }

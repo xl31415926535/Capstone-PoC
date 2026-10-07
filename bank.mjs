@@ -193,9 +193,12 @@ export function qualityFlags(stem, options, correct, { hasFigure = false } = {})
   const keys = Object.keys(options);
   if (correct === null || correct === undefined || correct === '') warn('no_answer', 'The source gives no answer key for this question.');
   else if (!keys.includes(String(correct))) warn('answer_not_in_options', `The key "${correct}" is not one of the extracted options.`);
-  if (keys.length < 3) warn('few_options', `Only ${keys.length} option${keys.length === 1 ? ' was' : 's were'} extracted.`);
+  const blank = keys.filter(k => !String(options[k] ?? '').trim());
+  const filled = keys.length - blank.length;
+  if (filled < 3) warn('few_options', `Only ${filled} option${filled === 1 ? ' was' : 's were'} extracted.`);
   const noisy = keys.filter(k => { const v = String(options[k] ?? ''); return v.length > 140 || /sample paper|www\.|https?:\/\/|\bpage \d+\b|\bclass[- ]\d+\b/i.test(v) || /\s[A-H][.)]\s+\S/.test(v); });
-  if (noisy.length) warn('option_noise', `Option${noisy.length > 1 ? 's' : ''} ${noisy.join(', ')} may hold page headers, footers or merged options.`);
+  const plural = list => list.length > 1 ? `Options ${list.join(', ')}` : `Option ${list[0]}`;
+  if (blank.length || noisy.length) warn('option_noise', [blank.length ? `${plural(blank)} ${blank.length > 1 ? 'are' : 'is'} blank.` : '', noisy.length ? `${plural(noisy)} may hold page headers, footers or merged options.` : ''].filter(Boolean).join(' '));
   const text = [stem, ...Object.values(options)].join(' ');
   const words = text.match(/[A-Za-z]+/g) || [];
   const fragments = words.filter(w => /^[a-z]{1,2}$/.test(w) && !SHORT_WORDS.has(w)).length;
@@ -633,31 +636,56 @@ export function coverage(db, records, curriculum) {
   };
 }
 
-// Candidate source questions for comparing a draft against the bank.
-export function similarSources(db, text, limit = 25) {
+// Candidates for the source-overlap check on a draft: the questions that share
+// the most words with it, plus any questions the draft was generated from.
+export function similarSources(db, text, { limit = 25, include = [] } = {}) {
+  const columns = 'q.id, p.source_key, q.provider, q.competition, q.source_question_number AS number, q.stem, q.options_json';
   const match = ftsQuery(text, { any: true, max: 32 });
-  if (!match) return [];
-  return db.prepare('SELECT q.id, p.source_key, q.provider, q.competition, q.source_question_number AS number, q.stem, q.options_json FROM questions_fts JOIN questions q ON q.id = questions_fts.rowid JOIN question_profile p ON p.question_id = q.id WHERE questions_fts MATCH ? ORDER BY bm25(questions_fts) LIMIT ?').all(match, limit)
-    .map(r => ({ id: r.id, sourceKey: r.source_key, label: `${r.provider} · ${r.competition} · Q${r.number}`, text: [r.stem, ...Object.values(parseOptions(r.options_json))].join(' ') }));
+  const rows = match ? db.prepare(`SELECT ${columns} FROM questions_fts JOIN questions q ON q.id = questions_fts.rowid JOIN question_profile p ON p.question_id = q.id WHERE questions_fts MATCH ? ORDER BY bm25(questions_fts), q.id LIMIT ?`).all(match, limit) : [];
+  const extra = include.filter(id => Number.isInteger(id) && !rows.some(r => r.id === id));
+  if (extra.length) rows.push(...db.prepare(`SELECT ${columns} FROM questions q JOIN question_profile p ON p.question_id = q.id WHERE q.id IN (${extra.map(() => '?').join(', ')}) ORDER BY q.id`).all(...extra));
+  return rows.map(r => ({ id: r.id, sourceKey: r.source_key, label: `${r.provider} · ${r.competition} · Q${r.number}`, text: [r.stem, ...Object.values(parseOptions(r.options_json))].join(' ') }));
 }
 
-// Reference questions for retrieval-grounded generation: pilot-topic questions
-// without extraction damage, best full-text match first.
-export function retrieveReferences(db, query, { k = 4, topic = PILOT_TOPIC } = {}) {
-  const filters = "EXISTS (SELECT 1 FROM question_topics t WHERE t.question_id = q.id AND t.topic_id = ? AND t.status <> 'rejected') AND p.level_band <> 'secondary' AND NOT EXISTS (SELECT 1 FROM question_flags f WHERE f.question_id = q.id AND f.code IN ('garbled_text', 'option_noise', 'few_options'))";
+// Flags that make a question a poor example for the generator: extraction
+// damage, an unusable key, or wording the syllabus leaves out.
+export const REFERENCE_EXCLUDED_FLAGS = ['garbled_text', 'option_noise', 'few_options', 'answer_not_in_options', 'excluded_content'];
+
+// Reference questions for retrieval-grounded generation. Each query (one per
+// reasoning family, say) ranks the eligible questions by full-text match, and
+// the picks alternate between queries so that every query is represented.
+// Eligible: tagged to the topic, not secondary level, none of the flags above.
+// When matches run out, the remaining eligible questions fill the list in id order.
+export function retrieveReferences(db, queries, { k = 6, topic = PILOT_TOPIC } = {}) {
+  const list = (Array.isArray(queries) ? queries : [{ key: 'query', text: queries }]).filter(q => q && typeof q.text === 'string');
+  const filters = `EXISTS (SELECT 1 FROM question_topics t WHERE t.question_id = q.id AND t.topic_id = ? AND t.status <> 'rejected') AND p.level_band <> 'secondary' AND NOT EXISTS (SELECT 1 FROM question_flags f WHERE f.question_id = q.id AND f.code IN (${REFERENCE_EXCLUDED_FLAGS.map(() => '?').join(', ')}))`;
   const columns = 'q.id, p.source_key, q.provider, q.competition, q.grade_scope, q.source_question_number AS number, q.stem, q.options_json, q.correct_option';
-  const match = ftsQuery(query, { any: true, max: 32 });
-  const ranked = match ? db.prepare(`SELECT ${columns} FROM questions_fts JOIN questions q ON q.id = questions_fts.rowid JOIN question_profile p ON p.question_id = q.id WHERE questions_fts MATCH ? AND ${filters} ORDER BY bm25(questions_fts), q.id LIMIT ?`).all(match, topic, k) : [];
-  const rest = ranked.length < k ? db.prepare(`SELECT ${columns} FROM questions q JOIN question_profile p ON p.question_id = q.id WHERE ${filters} ORDER BY q.id`).all(topic).filter(r => !ranked.some(x => x.id === r.id)).slice(0, k - ranked.length) : [];
+  const ranked = list.map(q => {
+    const match = ftsQuery(q.text, { any: true, max: 32 });
+    return match ? db.prepare(`SELECT ${columns} FROM questions_fts JOIN questions q ON q.id = questions_fts.rowid JOIN question_profile p ON p.question_id = q.id WHERE questions_fts MATCH ? AND ${filters} ORDER BY bm25(questions_fts), q.id LIMIT ?`).all(match, topic, ...REFERENCE_EXCLUDED_FLAGS, k) : [];
+  });
+  const picked = new Map();
+  for (let round = 0; picked.size < k && ranked.some(rows => rows.length > round); round++) {
+    for (const rows of ranked) {
+      const row = rows.slice(round).find(r => !picked.has(r.id));
+      if (row && picked.size < k) picked.set(row.id, row);
+    }
+  }
+  const matched = picked.size;
+  if (picked.size < k) for (const row of db.prepare(`SELECT ${columns} FROM questions q JOIN question_profile p ON p.question_id = q.id WHERE ${filters} ORDER BY q.id`).all(topic, ...REFERENCE_EXCLUDED_FLAGS)) {
+    if (picked.size >= k) break;
+    if (!picked.has(row.id)) picked.set(row.id, row);
+  }
   const figure = db.prepare("SELECT figure_json FROM question_assets WHERE question_id = ? AND kind = 'circuit_figure' ORDER BY id LIMIT 1");
   const image = db.prepare("SELECT 1 FROM question_assets WHERE question_id = ? AND kind = 'figure_image' LIMIT 1");
-  return [...ranked, ...rest].map((r, i) => {
+  return [...picked.values()].map((r, i) => {
     const circuit = figure.get(r.id);
     return {
       ref: `S${i + 1}`, bankId: r.id, sourceKey: r.source_key, source: `${r.provider} · ${r.competition} · ${r.grade_scope} · Q${r.number}`,
-      stem: r.stem, options: parseOptions(r.options_json), hasKey: r.correct_option !== null,
+      stem: r.stem, options: parseOptions(r.options_json), key: r.correct_option ?? null,
       figure: circuit ? describeFigure(JSON.parse(circuit.figure_json)) : image.get(r.id) ? 'The source has a figure that is not reproduced here.' : null,
-      matched: i < ranked.length,
+      matchedFor: list.filter((q, n) => ranked[n].some(x => x.id === r.id)).map(q => q.key),
+      matched: i < matched,
     };
   });
 }

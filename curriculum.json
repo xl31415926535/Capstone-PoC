@@ -2,23 +2,92 @@
   "id": "MOE-2023-P5-ELECTRICITY",
   "title": "Singapore MOE — P5 Standard Electrical System",
   "version": "2023 Primary Science Teaching and Learning Syllabus",
+  "syllabusId": "MOE-2023-PRIMARY-SCIENCE",
+  "topicId": "P5-SYSTEMS-ELECTRICAL",
   "grade": "Primary 5",
   "stream": "Standard",
   "topic": "Electrical System",
   "objectives": [
     {
+      "id": "P5-ELEC-SYSTEM",
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-C1",
+      "title": "Circuits as electrical systems",
+      "paraphrase": "Recognise that a battery, wires, bulbs and switches together form an electrical system.",
+      "description": "Paraphrased outcome: recognise that a circuit made of an energy source (battery) and other components (wire, bulb, switch) forms an electrical system. This ID is an internal mapping label, not an official MOE code.",
+      "page": 59,
+      "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    },
+    {
       "id": "P5-ELEC-CLOSED",
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-C2",
       "title": "Closed circuits",
+      "paraphrase": "Understand that a closed circuit permits current to flow.",
       "description": "Paraphrased outcome: understand that a closed circuit permits current to flow. This ID is an internal mapping label, not an official MOE code. Alignment remains subject to teacher review.",
       "page": 59,
       "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
     },
     {
       "id": "P5-ELEC-MATERIALS",
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-C3",
       "title": "Electrical conductors and insulators",
+      "paraphrase": "Identify electrical conductors and insulators.",
       "description": "Paraphrased outcome: identify electrical conductors and insulators. This ID is an internal mapping label, not an official MOE code. The demonstration tests inference from observations, not a practical construction skill.",
       "page": 59,
       "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    },
+    {
+      "id": "P5-ELEC-DIAGRAMS",
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-P1",
+      "title": "Circuit diagrams",
+      "paraphrase": "Construct simple circuits from circuit diagrams.",
+      "description": "Paraphrased outcome: construct simple circuits from circuit diagrams. A written MCQ can assess reading a circuit diagram and predicting what the built circuit does; it cannot assess hands-on construction. This ID is an internal mapping label, not an official MOE code.",
+      "page": 59,
+      "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    },
+    {
+      "id": "P5-ELEC-VARIABLES",
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-P2",
+      "title": "Batteries and bulbs in series and parallel",
+      "paraphrase": "Investigate how the number of batteries in series and the number of bulbs in series or parallel affect the current in a circuit.",
+      "description": "Paraphrased outcome: investigate the effect of the number of batteries (arranged in series) and the number of bulbs (arranged in series and parallel) on the current in a circuit. Bulb brightness is the qualitative sign of current. Foundation Science (page 60) covers bulbs in series only. This ID is an internal mapping label, not an official MOE code.",
+      "page": 59,
+      "sourceUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx"
+    }
+  ],
+  "excludedOutcomes": [
+    {
+      "outcomeId": "P5-SYSTEMS-ELECTRICAL-S-V1",
+      "reason": "Values outcome (conserving electricity, proper use and handling). These MCQs do not assess attitudes."
+    }
+  ],
+  "scopeRules": [
+    {
+      "id": "SCOPE-ELEC-QUALITATIVE",
+      "text": "Reason qualitatively. Do not use voltage, resistance, measured current, their units or meters.",
+      "basis": "Page 59 asks how variables affect the current; it names no quantities, units or meters. These are secondary-school content.",
+      "block": ["(?<!low[- ])\\bvoltages?\\b", "\\bvoltmeters?\\b", "\\bammeters?\\b", "\\bresistors?\\b", "\\bresistance\\b", "\\bohms?\\b", "Ω", "\\bamperes?\\b", "\\bpotential difference\\b"],
+      "flag": ["\\blow[- ]voltage\\b", "\\b\\d+(?:\\.\\d+)?\\s?(?:V|mA|A)\\b", "\\bamps?\\b"]
+    },
+    {
+      "id": "SCOPE-ELEC-BATTERIES-SERIES",
+      "text": "Arrange batteries in series only.",
+      "basis": "Page 59 lists the number of batteries arranged in series.",
+      "block": ["\\bbatteries\\s+(?:(?:are|were)\\s+)?(?:(?:connected|arranged|placed|joined)\\s+)?in parallel\\b", "\\bparallel(?:-connected)? batter(?:y|ies)\\b"],
+      "flag": []
+    },
+    {
+      "id": "SCOPE-ELEC-NO-MAINS",
+      "text": "Use batteries only; no mains electricity, power points or household wiring.",
+      "basis": "Classroom investigations on page 59 use batteries; the values outcome asks for proper handling of electricity.",
+      "block": [],
+      "flag": ["\\bmains\\b", "\\b(?:power|wall) (?:points?|sockets?|outlets?)\\b", "\\b2[34]0\\s?V\\b"]
+    },
+    {
+      "id": "SCOPE-ELEC-SHORT-CIRCUIT",
+      "text": "Do not test short circuits.",
+      "basis": "Short circuits are not among the page 59 outcomes.",
+      "block": [],
+      "flag": ["\\bshort[- ]?circuit"]
     }
   ],
   "assessment": {

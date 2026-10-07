@@ -1,0 +1,2447 @@
+{
+ "schemaVersion": 1,
+ "id": "MOE-2023-PRIMARY-SCIENCE",
+ "title": "Science Teaching and Learning Syllabus, Primary Three to Six, Standard / Foundation",
+ "edition": "Implementation starting with the 2023 Primary Three cohort; updated January 2026",
+ "publisher": "Curriculum Planning and Development Division, Ministry of Education, Singapore",
+ "copyright": "© 2022 Curriculum Planning and Development Division. The syllabus permits reproduction for personal or non-commercial educational use. Its learning outcomes are quoted here for curriculum alignment in a non-commercial student prototype; the PDF itself is not redistributed.",
+ "officialUrl": "https://www.moe.gov.sg/-/media/files/primary/syllabus/2023-primary-science.ashx",
+ "source": {
+  "sha256": "0556023ceb55fe80de75ae044011b8c77ea7ea494a1873d2b224a9b2b8083ab0",
+  "pdfPages": 87,
+  "printedPage": "printed page number = PDF page number - 1",
+  "outcomePages": "38-80",
+  "extractedWith": "scripts/syllabus/extract_outcomes.py, then scripts/syllabus/build-syllabus.mjs"
+ },
+ "ids": "Topic and outcome IDs are internal labels for this prototype, not official MOE codes. Outcome ID = topic ID, stream (A all pupils in P3-P4, S Standard, F Foundation), dimension (C core ideas, P practices, V values, ethics and attitudes) and position on the page.",
+ "exclusionNote": "Exclusions quote every \"not required\" note in the outcome tables. The block and flag term patterns are a screening aid written for this prototype, not syllabus text; a teacher still judges scope.",
+ "themes": [
+  "Diversity",
+  "Cycles",
+  "Systems",
+  "Interactions",
+  "Energy"
+ ],
+ "topics": [
+  {
+   "id": "P3-DIVERSITY-LIVING",
+   "theme": "Diversity",
+   "level": "P3",
+   "label": "Living and non-living things",
+   "title": "Diversity of Living and Non-Living Things (General characteristics and classification)",
+   "streams": {
+    "all": {
+     "title": "Diversity of Living and Non-Living Things (General characteristics and classification)",
+     "pages": [
+      38
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P3-DIVERSITY-LIVING-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 38,
+     "text": "Describe the characteristics of living things.",
+     "points": [
+      "Need water, food and air to survive",
+      "Grow, respond and reproduce"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P3-DIVERSITY-LIVING-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 38,
+     "text": "Recognise some broad groups of living things based on similarities and differences.",
+     "points": [
+      "Plants (flowering, non-flowering)",
+      "Animals (amphibians, birds, fish, insects, mammals, reptiles)",
+      "Fungi (mould, mushroom, yeast)",
+      "Bacteria"
+     ],
+     "notes": [
+      "Recall of names of specific living things (e.g., guppy) and their characteristics (e.g., give birth to young alive) is not required."
+     ]
+    },
+    {
+     "id": "P3-DIVERSITY-LIVING-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 38,
+     "text": "Observe a variety of living and non-living things and infer differences between them.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-DIVERSITY-LIVING-A-P2",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 38,
+     "text": "Classify living things into broad groups (in plants and animals) based on similarities and differences of common observable characteristics.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-DIVERSITY-LIVING-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 38,
+     "text": "Show curiosity by questioning and exploring the surrounding living and non-living things.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-DIVERSITY-LIVING-A-V2",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 38,
+     "text": "Show care and concern by being responsible towards living things.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P3-DIVERSITY-MATERIALS",
+   "theme": "Diversity",
+   "level": "P3",
+   "label": "Materials",
+   "title": "Diversity of Materials",
+   "streams": {
+    "all": {
+     "title": "Diversity of Materials",
+     "pages": [
+      39,
+      40
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P3-DIVERSITY-MATERIALS-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 39,
+     "text": "Relate the use of various types of materials (wood, metal, ceramic, rubber, glass, plastic, fabric) to their physical properties.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-DIVERSITY-MATERIALS-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 39,
+     "text": "Compare physical properties of materials.",
+     "points": [
+      "Strength",
+      "Flexibility",
+      "Ability to float/sink in water",
+      "Waterproof",
+      "Transparency"
+     ],
+     "notes": [
+      "The focus is on how the properties of materials are used.",
+      "The “strength” of a material is its ability to be subjected to loads without breaking.",
+      "The “flexibility” of a material is its ability to bend without breaking.",
+      "The “ability to float on water” refers to whether an object is able to stay on or near the surface of water and not sink. (The concept of density is not required.)",
+      "A material is “waterproof” when it does not absorb water.",
+      "The “transparency” of a material refers to whether the material allows most/ some or no light to pass through. (The use of terms – transparent/ translucent/ opaque is not required.)"
+     ]
+    },
+    {
+     "id": "P3-DIVERSITY-MATERIALS-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 39,
+     "text": "Show objectivity by using data and information to validate observations and explanations about the properties and uses of materials.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P3-CYCLES-LIFE",
+   "theme": "Cycles",
+   "level": "P3",
+   "label": "Life cycles",
+   "title": "Cycles in Plants and Animals (Life Cycles)",
+   "streams": {
+    "all": {
+     "title": "Cycles in Plants and Animals (Life Cycles)",
+     "pages": [
+      42
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P3-CYCLES-LIFE-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 42,
+     "text": "Show an understanding that different living things have different life cycles.",
+     "points": [
+      "Plants",
+      "Animals"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P3-CYCLES-LIFE-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 42,
+     "text": "Observe and compare the life cycles of plants grown from seeds over a period of time.",
+     "points": [],
+     "notes": [
+      "The focus is on the stages (seed, young plant, adult plant) of flowering plants. Processes in plant reproduction (pollination, fertilisation, seed dispersal and germination) are introduced in the topic of Cycles in Plants and Animals (Reproduction) in P5."
+     ]
+    },
+    {
+     "id": "P3-CYCLES-LIFE-A-P2",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 42,
+     "text": "Observe and compare the life cycles of animals over a period of time (chicken, cockroach, frog, grasshopper, beetle, butterfly, mosquito)",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-CYCLES-LIFE-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 42,
+     "text": "Show curiosity by questioning and exploring the surrounding plants and animals.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-CYCLES-LIFE-A-V2",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 42,
+     "text": "Show care and concern by being responsible towards plants and animals.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P5-CYCLES-REPRODUCTION",
+   "theme": "Cycles",
+   "level": "P5",
+   "label": "Reproduction",
+   "title": "Cycles in Plants and Animals (Reproduction)",
+   "streams": {
+    "standard": {
+     "title": "Cycles in Plants and Animals (Reproduction)",
+     "pages": [
+      43,
+      44,
+      45
+     ]
+    },
+    "foundation": {
+     "title": "Cycles in Plants and Animals (Reproduction)",
+     "pages": [
+      46,
+      47
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 43,
+     "text": "Recognise that a cell is a basic unit of life.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 43,
+     "text": "Show an understanding that living things reproduce to ensure continuity of their kind and that many characteristics of an organism are passed on from parents to offspring.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 43,
+     "text": "Describe processes in the sexual reproduction of flowering plants.",
+     "points": [
+      "Pollination",
+      "Fertilisation (seed production)",
+      "Seed dispersal",
+      "Germination"
+     ],
+     "notes": [
+      "Fertilisation occurs when a male reproductive cell fuses with a female reproductive cell.",
+      "The use of specific terms (“self-pollination” and “cross-pollination”) to describe the pollination process is not required.",
+      "Knowledge of the pollen tube formation is not required.",
+      "The specific location where fertilisation takes place in the female reproductive system is not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-C4",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 44,
+     "text": "Recognise the process of fertilisation in the sexual reproduction of humans.",
+     "points": [],
+     "notes": [
+      "Fertilisation occurs when a sperm fuses with an egg.",
+      "The fertilised egg develops in the womb.",
+      "Students should know that ovaries produce eggs, and the testes produce sperms.",
+      "Foetal development and the mechanism of obtaining air, food and water through the umbilical cord are not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-C5",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 45,
+     "text": "Recognise the similarity in terms of fertilisation in the sexual reproduction of flowering plants and humans.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 43,
+     "text": "Investigate the ways in which plants reproduce.",
+     "points": [
+      "Spores",
+      "Seeds"
+     ],
+     "notes": [
+      "Vegetative propagation methods, such as stem cutting, are not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 43,
+     "text": "Show curiosity by questioning and exploring the surrounding plants and animals.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-S-V2",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 43,
+     "text": "Show care and concern by being responsible towards plants and animals.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 46,
+     "text": "State the processes in the sexual reproduction of flowering plants.",
+     "points": [
+      "Pollination",
+      "Fertilisation (seed production)",
+      "Seed dispersal",
+      "Germination"
+     ],
+     "notes": [
+      "Fertilisation is the process that leads to the development of fruits and seeds.",
+      "The use of specific terms (“self-pollination” and “cross-pollination”) to describe the pollination process is not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 46,
+     "text": "State the process of fertilisation in the sexual reproduction of humans.",
+     "points": [],
+     "notes": [
+      "Fertilisation occurs when a sperm fuses with an egg.",
+      "The fertilised egg develops in the womb.",
+      "Students should know that ovaries produce eggs, and the testes produce sperms.",
+      "Foetal development and the mechanism of obtaining air, food and water through the umbilical cord are not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 46,
+     "text": "Observe and compare the ways in which plants reproduce.",
+     "points": [
+      "Spores",
+      "Seeds"
+     ],
+     "notes": [
+      "Vegetative propagation methods, such as stem cutting, are not required."
+     ]
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 46,
+     "text": "Show curiosity by questioning and exploring the surrounding plants and animals.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-REPRODUCTION-F-V2",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 46,
+     "text": "Show care and concern by being responsible towards plants and animals.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P4-CYCLES-MATTER",
+   "theme": "Cycles",
+   "level": "P4",
+   "label": "Matter",
+   "title": "Cycles in Matter and Water (Matter)",
+   "streams": {
+    "all": {
+     "title": "Cycles in Matter and Water (Matter)",
+     "pages": [
+      48
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P4-CYCLES-MATTER-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 48,
+     "text": "State that matter is anything that has mass and occupies space.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-CYCLES-MATTER-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 48,
+     "text": "Differentiate among the three states of matter (solid, liquid, gas) in terms of shape and volume.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-CYCLES-MATTER-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 48,
+     "text": "Measure mass and volume using appropriate apparatus.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-CYCLES-MATTER-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 48,
+     "text": "Show curiosity in exploring matter in the surroundings and question what they find.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P5-CYCLES-WATER",
+   "theme": "Cycles",
+   "level": "P5",
+   "label": "Water",
+   "title": "Cycles in Matter and Water (Water)",
+   "streams": {
+    "standard": {
+     "title": "Cycles in Matter and Water (Water)",
+     "pages": [
+      49,
+      50
+     ]
+    },
+    "foundation": {
+     "title": "Cycles in Matter and Water (Water)",
+     "pages": [
+      51
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P5-CYCLES-WATER-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 49,
+     "text": "Recognise that water can exist in three interchangeable states of matter.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 49,
+     "text": "Show an understanding of how water changes from one state to another.",
+     "points": [
+      "Melting (solid to liquid)",
+      "Freezing (liquid to solid)",
+      "Boiling/Evaporation (liquid to gas)",
+      "Condensation (gas to liquid)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 49,
+     "text": "Show an understanding of the terms melting point of ice (or freezing point of water) and boiling point of water.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C4",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 49,
+     "text": "Show an understanding of the roles of evaporation and condensation in the water cycle.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C5",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 49,
+     "text": "Recognise the importance of the water cycle.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C6",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 50,
+     "text": "Recognise the importance of water to life processes.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-C7",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 50,
+     "text": "Describe the impact of water pollution on Earth’s water resources.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 49,
+     "text": "Compare water in 3 states.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-P2",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 49,
+     "text": "Investigate the effect of heat gain or loss on the temperature and state of water.",
+     "points": [
+      "When ice is heated, it melts and changes to water at 0 °C.",
+      "When water is cooled, it freezes and changes to ice at 0 °C.",
+      "When water is heated, it boils and changes to steam at 100 °C.",
+      "When steam is cooled, it condenses to water."
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-P3",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 49,
+     "text": "Investigate the factors which affect the rate of evaporation.",
+     "points": [
+      "Wind",
+      "Temperature",
+      "Exposed surface area"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 49,
+     "text": "Show concern for water as a limited natural resource and be responsible in conserving.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 51,
+     "text": "Recognise that water can exist in three interchangeable states of matter.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 51,
+     "text": "State how water changes from one state to another.",
+     "points": [
+      "Melting (solid to liquid)",
+      "Freezing (liquid to solid)",
+      "Boiling/Evaporation (liquid to gas)",
+      "Condensation (gas to liquid)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-C3",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 51,
+     "text": "State the melting point of ice (or freezing point of water) and boiling point of water.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-C4",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 51,
+     "text": "Recognise the changes in states of water in the water cycle.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-C5",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 51,
+     "text": "Recognise the importance of the water cycle.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 51,
+     "text": "Compare water in 3 states.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-CYCLES-WATER-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 51,
+     "text": "Show concern for water as a limited natural resource and be responsible in conserving.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P4-SYSTEMS-DIGESTIVE",
+   "theme": "Systems",
+   "level": "P4",
+   "label": "Human digestive system",
+   "title": "Human System (Digestive System)",
+   "streams": {
+    "all": {
+     "title": "Human System (Digestive System)",
+     "pages": [
+      53
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P4-SYSTEMS-DIGESTIVE-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 53,
+     "text": "Identify the human systems in the body and state their functions (digestive, respiratory, circulatory, skeletal and muscular).",
+     "points": [],
+     "notes": [
+      "This learning outcome introduces students to an overview of human systems in the body. Detailed knowledge of the muscular and skeletal systems (such as names of the bones/muscles in the body and descriptions of how they work) are not required."
+     ]
+    },
+    {
+     "id": "P4-SYSTEMS-DIGESTIVE-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 53,
+     "text": "Identify the parts in the human digestive system (mouth, gullet, stomach, small intestine and large intestine) and describe their functions.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-SYSTEMS-DIGESTIVE-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 53,
+     "text": "Show curiosity in questioning about the structures or functions of the body.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P5-SYSTEMS-HUMAN-RESP-CIRC",
+   "theme": "Systems",
+   "level": "P5",
+   "label": "Human respiratory and circulatory systems",
+   "title": "Human System (Respiratory and circulatory systems)",
+   "streams": {
+    "standard": {
+     "title": "Human System (Respiratory and circulatory systems)",
+     "pages": [
+      54
+     ]
+    },
+    "foundation": {
+     "title": "Human System (Respiratory and circulatory systems)",
+     "pages": [
+      55
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 54,
+     "text": "Recognise that air is made up of gases such as nitrogen, carbon dioxide, oxygen and water vapour.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 54,
+     "text": "Identify the parts of the human respiratory (nose, windpipe, lungs) and circulatory systems (heart, blood, blood vessels) and describe their functions.",
+     "points": [],
+     "notes": [
+      "Detailed knowledge of respiratory system (e.g., alveoli) and circulatory system (e.g., heart chambers and valves) is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 54,
+     "text": "Recognise the integration of the different systems (digestive, respiratory and circulatory) in carrying out life processes.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 54,
+     "text": "Compare how plants, fish and humans take in oxygen and give out carbon dioxide.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-P2",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 54,
+     "text": "Compare the ways in which substances are transported within plants and humans.",
+     "points": [
+      "Plants: Tubes that transport food and water",
+      "Humans: Blood vessels that transport digested food, oxygen and carbon dioxide"
+     ],
+     "notes": [
+      "The use of specific terms (xylem, phloem, stomata, artery, vein, capillary) is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 54,
+     "text": "Show objectivity by seeking data and information to validate observations and explanations about the human body.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 55,
+     "text": "Recognise that air is made up of gases such as nitrogen, carbon dioxide, oxygen and water vapour.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 55,
+     "text": "Identify the parts of the human respiratory (nose, windpipe, lungs) and circulatory systems (heart, blood, blood vessels) and state their functions.",
+     "points": [],
+     "notes": [
+      "Detailed knowledge of respiratory system (e.g., alveoli) and circulatory system (e.g., heart chambers and valves) is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 55,
+     "text": "Compare how plants and humans take in oxygen and give out carbon dioxide.",
+     "points": [],
+     "notes": [
+      "The use of specific terms (xylem, phloem and stomata, artery, vein, capillary) is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-HUMAN-RESP-CIRC-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 55,
+     "text": "Show objectivity by seeking data and information to validate observations and explanations about the human body.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P4-SYSTEMS-PLANT-PARTS",
+   "theme": "Systems",
+   "level": "P4",
+   "label": "Plant parts and functions",
+   "title": "Plant System (Plant parts and functions)",
+   "streams": {
+    "all": {
+     "title": "Plant System (Plant parts and functions)",
+     "pages": [
+      56
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P4-SYSTEMS-PLANT-PARTS-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 56,
+     "text": "Identify the different parts of plants and state their functions.",
+     "points": [
+      "Leaf",
+      "Stem",
+      "Root"
+     ],
+     "notes": [
+      "Food-carrying and water-carrying tubes in the plant transport system are introduced in the topic of Plant System (Respiratory and Circulatory Systems) in P5."
+     ]
+    },
+    {
+     "id": "P4-SYSTEMS-PLANT-PARTS-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 56,
+     "text": "Observe plant parts.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-SYSTEMS-PLANT-PARTS-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 56,
+     "text": "Show curiosity in exploring the surrounding plants and question what they find.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-SYSTEMS-PLANT-PARTS-A-V2",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 56,
+     "text": "Show care and concern by being responsible towards plants.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P5-SYSTEMS-PLANT-TRANSPORT",
+   "theme": "Systems",
+   "level": "P5",
+   "label": "Plant transport system",
+   "title": "Plant System (Respiratory and circulatory systems)",
+   "streams": {
+    "standard": {
+     "title": "Plant System (Respiratory and circulatory systems)",
+     "pages": [
+      57
+     ]
+    },
+    "foundation": {
+     "title": "Plant System (Respiratory and circulatory systems)",
+     "pages": [
+      58
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 57,
+     "text": "Identify the parts of the plant transport system and describe their functions.",
+     "points": [],
+     "notes": [
+      "Recall of the relative positions of water-carrying and food-carrying tubes is not required.",
+      "The use of specific terms (xylem and phloem) is not required.",
+      "The concept of transpiration pull is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 57,
+     "text": "Investigate how food and water are transported in the plant.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 57,
+     "text": "Show objectivity by seeking data and information to validate observations and explanations about plant parts and functions.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-S-V2",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 57,
+     "text": "Show care and concern by being responsible towards plants.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 58,
+     "text": "Recognise how water is transported from the roots to other parts of the plant and how food is transported from the leaves to other parts of the plant.",
+     "points": [],
+     "notes": [
+      "Recall of the relative positions of water-carrying and food-carrying tubes is not required.",
+      "The use of specific terms (xylem and phloem) is not required.",
+      "The concept of transpiration pull is not required."
+     ]
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 58,
+     "text": "Observe how food and water are transported in the plant.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 58,
+     "text": "Show objectivity by seeking data and information to validate observations and explanations about plant parts and functions.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-PLANT-TRANSPORT-F-V2",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 58,
+     "text": "Show care and concern by being responsible towards plants.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P5-SYSTEMS-ELECTRICAL",
+   "theme": "Systems",
+   "level": "P5",
+   "label": "Electrical system",
+   "title": "Electrical System",
+   "streams": {
+    "standard": {
+     "title": "Electrical System",
+     "pages": [
+      59
+     ]
+    },
+    "foundation": {
+     "title": "Electrical System",
+     "pages": [
+      60
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 59,
+     "text": "Recognise that an electric circuit consisting of an energy source (battery) and other circuit components (wire, bulb, switch) forms an electrical system.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 59,
+     "text": "Show an understanding that a closed circuit allows current to flow.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 59,
+     "text": "Identify electrical conductors and insulators.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 59,
+     "text": "Construct simple circuits from circuit diagrams.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-P2",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 59,
+     "text": "Investigate the effect of some variables on the current in a circuit.",
+     "points": [
+      "Number of batteries (arranged in series)",
+      "Number of bulbs (arranged in series and parallel)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 59,
+     "text": "Show concern for the need to conserve and to have proper use and handling of electricity.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 60,
+     "text": "Recognise that an electric circuit consisting of an energy source (battery) and other circuit components (wire, bulb, switch) forms an electrical system.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 60,
+     "text": "State that a closed circuit allows current to flow.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-C3",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 60,
+     "text": "Identify electrical conductors and insulators.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 60,
+     "text": "Construct simple circuits from circuit diagrams.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-P2",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 60,
+     "text": "Investigate the effect of some variables on the current in a circuit.",
+     "points": [
+      "Number of batteries (arranged in series)",
+      "Number of bulbs (arranged in series)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P5-SYSTEMS-ELECTRICAL-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 60,
+     "text": "Show concern for the need to conserve and to have proper use and handling of electricity.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P3-INTERACTIONS-MAGNETS",
+   "theme": "Interactions",
+   "level": "P3",
+   "label": "Magnets",
+   "title": "Interaction of Forces (Magnets)",
+   "streams": {
+    "all": {
+     "title": "Interaction of Forces (Magnets)",
+     "pages": [
+      62
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 62,
+     "text": "Recognise that a magnet can exert a push or a pull.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 62,
+     "text": "Identify the characteristics of magnets.",
+     "points": [
+      "Magnets can be made of iron or steel.",
+      "Magnets have two poles. A freely suspended bar magnet comes to rest pointing in a North-South direction.",
+      "Unlike poles attract and like poles repel.",
+      "Magnets attract magnetic materials."
+     ],
+     "notes": [
+      "Recall of magnetic materials such as nickel and cobalt is not required.",
+      "Magnetic shielding and magnetic induction are not required."
+     ]
+    },
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-C3",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 62,
+     "text": "Recognise uses of magnets in everyday objects.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 62,
+     "text": "Compare magnets, non-magnetic materials and magnetic materials.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-P2",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 62,
+     "text": "Make a magnet by the stroke method and the electrical method.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P3-INTERACTIONS-MAGNETS-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 62,
+     "text": "Show curiosity in exploring the uses of magnets in everyday life.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P6-INTERACTIONS-FORCES",
+   "theme": "Interactions",
+   "level": "P6",
+   "label": "Forces",
+   "title": "Interaction of Forces (Frictional force, gravitational force, elastic spring force)",
+   "streams": {
+    "standard": {
+     "title": "Interaction of Forces (Frictional force, gravitational force, elastic spring force)",
+     "pages": [
+      63,
+      64
+     ]
+    },
+    "foundation": {
+     "title": "Interaction of Forces (Frictional force, gravitational force)",
+     "pages": [
+      65,
+      66
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 63,
+     "text": "Identify a force as a push or a pull.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 63,
+     "text": "Show an understanding of the effects of a force.",
+     "points": [
+      "A force can move a stationary object.",
+      "A force can speed up, slow down or change the direction of motion.",
+      "A force can stop a moving object.",
+      "A force may change the shape of an object."
+     ],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 63,
+     "text": "Recognise and give examples of the different types of forces.",
+     "points": [
+      "Magnetic force",
+      "Gravitational force",
+      "Elastic spring force",
+      "Frictional force"
+     ],
+     "notes": [
+      "Direction of frictional force for “rolling objects” such as wheels and balls is not required.",
+      "The use of specific terms such as ‘air resistance’ and ‘water resistance’ is not required."
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-C4",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 64,
+     "text": "Recognise that objects have weight because of the gravitational force acting on the object.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 63,
+     "text": "Investigate the effect of frictional force on the motion of objects.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-P2",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 63,
+     "text": "Investigate the effects of elastic spring force.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 63,
+     "text": "Show objectivity by using data and information to validate observations and explanations about forces.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 65,
+     "text": "Identify a force as a push or a pull.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 65,
+     "text": "State the effects of a force.",
+     "points": [
+      "A force can move a stationary object.",
+      "A force can speed up, slow down or change the direction of motion.",
+      "A force can stop a moving object.",
+      "A force may change the shape of an object."
+     ],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-C3",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 65,
+     "text": "Recognise and give examples of the different types of forces.",
+     "points": [
+      "Magnetic force",
+      "Gravitational force",
+      "Frictional force"
+     ],
+     "notes": [
+      "Direction of frictional force for “rolling objects” such as wheels and balls is not required.",
+      "The use of specific terms such as ‘air resistance’ and ‘water resistance’ is not required."
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-C4",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 66,
+     "text": "Recognise that objects have weight because of the gravitational force acting on the object.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 65,
+     "text": "Investigate the effect of frictional force on the motion of objects.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-FORCES-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 65,
+     "text": "Show objectivity by using data and information to validate observations and explanations about forces.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P6-INTERACTIONS-ENVIRONMENT",
+   "theme": "Interactions",
+   "level": "P6",
+   "label": "Interactions within the environment",
+   "title": "Interactions within the Environment",
+   "streams": {
+    "standard": {
+     "title": "Interactions within the Environment",
+     "pages": [
+      67,
+      68,
+      69,
+      70
+     ]
+    },
+    "foundation": {
+     "title": "Interactions within the Environment",
+     "pages": [
+      71,
+      72,
+      73
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 67,
+     "text": "Identify the factors that affect the survival of an organism.",
+     "points": [
+      "Physical characteristics of the environment (temperature, light, water)",
+      "Availability of food",
+      "Types of other organisms present (producers, consumers, decomposers)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 67,
+     "text": "Show an understanding of the effect on organisms when the environment becomes unfavourable (organisms adapt and survive; move to other places or die).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 67,
+     "text": "Show an understanding of the energy pathway from the Sun through living things and identify the roles of various organisms (producers, consumers, predators, prey) in a food chain and a food web.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C4",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 68,
+     "text": "Differentiate among organism, population and community.",
+     "points": [
+      "An organism is a living thing.",
+      "A population is a group of organisms of the same kind, living and reproducing at a given place and time.",
+      "A community consists of many populations living together in a particular place."
+     ],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C5",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 68,
+     "text": "Show an understanding that different habitats support different communities (garden, field, pond, seashore, tree, mangrove swamp).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C6",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 69,
+     "text": "Show an understanding that adaptations serve to enhance survival and can be structural or behavioural.",
+     "points": [
+      "Cope with physical factors",
+      "Obtain food",
+      "Escape predators",
+      "Reproduce by finding and attracting mates or dispersing seeds/fruits"
+     ],
+     "notes": [
+      "Students are introduced to the types of dispersal methods and physical characteristics of different fruits and seeds in the theme of Cycles. The focus in this theme is to help students recognise that physical characteristics are the “structural adaptations” which help fruits and seeds in their dispersal."
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-C7",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 70,
+     "text": "Give examples of man’s impact (both positive and negative) on the environment.",
+     "points": [],
+     "notes": [
+      "Positive impact [Conservation, Reforestation]",
+      "Negative impact [Depleting natural resources, deforestation, pollution (land/water/air), global warming]"
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 67,
+     "text": "Observe, collect and record information regarding the interacting factors within an environment.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 67,
+     "text": "Show care and concern for Man’s impact on the environment by being respectful and responsible towards the environment.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 71,
+     "text": "Identify the factors that affect the survival of an organism.",
+     "points": [
+      "Physical characteristics of the environment (temperature, light, water)",
+      "Availability of food",
+      "Types of other organisms present (producers, consumers, decomposers)"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-C2",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 71,
+     "text": "Recognise the energy pathway from the Sun through living things and identify the roles of various organisms (producers, consumers, predators, prey) in a food chain.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-C3",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 71,
+     "text": "Recognise that different habitats support different organisms (garden, field, pond, seashore, tree, mangrove swamp).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-C4",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 72,
+     "text": "Recognise that adaptations serve to enhance survival and can be structural or behavioural.",
+     "points": [
+      "Cope with physical factors",
+      "Obtain food",
+      "Escape predators",
+      "Reproduce by finding and attracting mates or dispersing seeds/fruits"
+     ],
+     "notes": [
+      "Students are introduced to the types of dispersal methods and physical characteristics of different fruits and seeds in the theme of Cycles. The focus in this theme is to help students recognise that physical characteristics are the “structural adaptations” which help fruits and seeds in their dispersal."
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-C5",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 73,
+     "text": "Give examples of man’s impact (both positive and negative) on the environment.",
+     "points": [],
+     "notes": [
+      "Positive impact [Conservation, Reforestation]",
+      "Negative impact [Depleting natural resources, deforestation, pollution (land/water/air), global warming]"
+     ]
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 71,
+     "text": "Observe, collect, and record information regarding the interacting factors within an environment.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-INTERACTIONS-ENVIRONMENT-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 71,
+     "text": "Show care and concern for Man’s impact on the environment by being respectful and responsible towards the environment.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P4-ENERGY-LIGHT",
+   "theme": "Energy",
+   "level": "P4",
+   "label": "Light",
+   "title": "Energy Forms and Uses (Light)",
+   "streams": {
+    "all": {
+     "title": "Energy Forms and Uses (Light)",
+     "pages": [
+      75
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P4-ENERGY-LIGHT-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 75,
+     "text": "Recognise that an object can be seen when it reflects light or when it is a source of light.",
+     "points": [],
+     "notes": [
+      "The law of reflection is not required."
+     ]
+    },
+    {
+     "id": "P4-ENERGY-LIGHT-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 75,
+     "text": "Recognise that light travels in straight lines and thus a shadow is formed when light is completely or partially blocked by an object.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-LIGHT-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 75,
+     "text": "Investigate the variables that affect shadows formed.",
+     "points": [
+      "Shape, size and position of object(s)",
+      "Distance between light source-object and object-screen"
+     ],
+     "notes": [
+      "The use of specific terms (transparent, translucent, opaque) is not required."
+     ]
+    },
+    {
+     "id": "P4-ENERGY-LIGHT-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 75,
+     "text": "Show objectivity by using data and information to validate observations and explanations about light.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P4-ENERGY-HEAT",
+   "theme": "Energy",
+   "level": "P4",
+   "label": "Heat",
+   "title": "Energy Forms and Uses (Heat)",
+   "streams": {
+    "all": {
+     "title": "Energy Forms and Uses (Heat)",
+     "pages": [
+      76,
+      77
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P4-ENERGY-HEAT-A-C1",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "Identify some common sources of heat.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C2",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "State that the temperature of an object is a measurement of its degree of hotness.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C3",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "State that heat is a form of energy.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C4",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "Differentiate between heat and temperature.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C5",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "Show an understanding that heat flows from a hotter to a colder object/ region/ place until both reach the same temperature.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C6",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 76,
+     "text": "Relate the change in temperature of an object to the gain or loss of heat by the object.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C7",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 77,
+     "text": "List some effects of heat gain/loss in our everyday life.",
+     "points": [
+      "Contraction / expansion of objects (solid, liquid and gas)",
+      "Change in state of matter"
+     ],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-C8",
+     "stream": "all",
+     "dimension": "core_ideas",
+     "page": 77,
+     "text": "Identify good and poor conductors of heat.",
+     "points": [
+      "Good conductors: metals",
+      "Poor conductors: wood, plastics, air, rubber"
+     ],
+     "notes": [
+      "Recall of the rate of heat transfer of specific materials (such as different types of metals) is not required."
+     ]
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-P1",
+     "stream": "all",
+     "dimension": "practices",
+     "page": 76,
+     "text": "Measure temperature using a thermometer and a datalogger with temperature/heat sensors.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P4-ENERGY-HEAT-A-V1",
+     "stream": "all",
+     "dimension": "values_ethics_attitudes",
+     "page": 76,
+     "text": "Show objectivity by seeking data and information to validate observations and explanations about heat.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P6-ENERGY-PHOTOSYNTHESIS",
+   "theme": "Energy",
+   "level": "P6",
+   "label": "Photosynthesis",
+   "title": "Energy Forms and Uses (Photosynthesis)",
+   "streams": {
+    "standard": {
+     "title": "Energy Forms and Uses (Photosynthesis)",
+     "pages": [
+      78
+     ]
+    },
+    "foundation": {
+     "title": "Energy Forms and Uses (Photosynthesis)",
+     "pages": [
+      79
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 78,
+     "text": "Recognise that living things need energy from respiration to carry out life processes.",
+     "points": [],
+     "notes": [
+      "The focus of respiration is on the release of energy from food."
+     ]
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 78,
+     "text": "Recognise that the Sun is our primary source of energy (light and heat).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-S-C3",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 78,
+     "text": "Differentiate between the ways in which plants and animals obtain energy.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 78,
+     "text": "Investigate the requirements (water, light energy and carbon dioxide) for photosynthesis (production of sugar and oxygen).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 78,
+     "text": "Show objectivity by using data and information to validate observations and explanations about photosynthesis.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-F-C1",
+     "stream": "foundation",
+     "dimension": "core_ideas",
+     "page": 79,
+     "text": "Recognise that the Sun is our primary source of energy (light and heat).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-F-P1",
+     "stream": "foundation",
+     "dimension": "practices",
+     "page": 79,
+     "text": "Investigate the requirements (water, light energy and carbon dioxide) for photosynthesis (production of sugar and oxygen).",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-PHOTOSYNTHESIS-F-V1",
+     "stream": "foundation",
+     "dimension": "values_ethics_attitudes",
+     "page": 79,
+     "text": "Show objectivity by using data and information to validate observations and explanations about photosynthesis.",
+     "points": [],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "P6-ENERGY-CONVERSION",
+   "theme": "Energy",
+   "level": "P6",
+   "label": "Energy conversion",
+   "title": "Energy Conversion",
+   "streams": {
+    "standard": {
+     "title": "Energy Conversion",
+     "pages": [
+      80
+     ]
+    }
+   },
+   "outcomes": [
+    {
+     "id": "P6-ENERGY-CONVERSION-S-C1",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 80,
+     "text": "Recognise that energy from most of our energy resources is derived in some ways from the Sun.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-CONVERSION-S-C2",
+     "stream": "standard",
+     "dimension": "core_ideas",
+     "page": 80,
+     "text": "Recognise and give examples of the various forms of energy.",
+     "points": [
+      "Kinetic energy",
+      "Potential energy",
+      "Light energy",
+      "Electrical energy",
+      "Sound energy",
+      "Heat energy"
+     ],
+     "notes": [
+      "The use of specific terms (chemical potential energy, gravitational potential energy and elastic potential energy) is not required."
+     ]
+    },
+    {
+     "id": "P6-ENERGY-CONVERSION-S-P1",
+     "stream": "standard",
+     "dimension": "practices",
+     "page": 80,
+     "text": "Investigate energy conversion from one form to another.",
+     "points": [],
+     "notes": []
+    },
+    {
+     "id": "P6-ENERGY-CONVERSION-S-V1",
+     "stream": "standard",
+     "dimension": "values_ethics_attitudes",
+     "page": 80,
+     "text": "Show care and concern by being responsible in conserving energy in our everyday life.",
+     "points": [],
+     "notes": []
+    }
+   ],
+   "foundationNote": "The syllabus has no Foundation outcome page for this topic; it is not required for Foundation Science."
+  }
+ ],
+ "exclusions": [
+  {
+   "id": "NR-P3-LIVING-NAMES",
+   "topicId": "P3-DIVERSITY-LIVING",
+   "summary": "Recalling names and characteristics of specific living things",
+   "note": "Recall of names of specific living things (e.g., guppy) and their characteristics (e.g., give birth to young alive) is not required.",
+   "pages": [
+    38
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P3-DIVERSITY-LIVING-A-C2"
+   ],
+   "check": "review",
+   "block": [],
+   "flag": []
+  },
+  {
+   "id": "NR-P3-DENSITY",
+   "topicId": "P3-DIVERSITY-MATERIALS",
+   "summary": "Density",
+   "note": "The “ability to float on water” refers to whether an object is able to stay on or near the surface of water and not sink. (The concept of density is not required.)",
+   "pages": [
+    39
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P3-DIVERSITY-MATERIALS-A-P1"
+   ],
+   "check": "block",
+   "block": [
+    "\\bdensit(?:y|ies)\\b",
+    "\\b(?:more|less) dense\\b",
+    "\\bdenser\\b",
+    "\\bdensest\\b"
+   ],
+   "flag": []
+  },
+  {
+   "id": "NR-P3-TRANSPARENCY-TERMS",
+   "topicId": "P3-DIVERSITY-MATERIALS",
+   "summary": "The terms transparent, translucent and opaque",
+   "note": "The “transparency” of a material refers to whether the material allows most/ some or no light to pass through. (The use of terms – transparent/ translucent/ opaque is not required.)",
+   "pages": [
+    39
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P3-DIVERSITY-MATERIALS-A-P1"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\btransparent\\b",
+    "\\btranslucent\\b",
+    "\\bopaque\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-POLLINATION-TERMS",
+   "topicId": "P5-CYCLES-REPRODUCTION",
+   "summary": "The terms self-pollination and cross-pollination",
+   "note": "The use of specific terms (“self-pollination” and “cross-pollination”) to describe the pollination process is not required.",
+   "pages": [
+    43,
+    46
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-CYCLES-REPRODUCTION-S-C3",
+    "P5-CYCLES-REPRODUCTION-F-C1"
+   ],
+   "check": "block",
+   "block": [
+    "\\bself[- ]?pollinat",
+    "\\bcross[- ]?pollinat"
+   ],
+   "flag": []
+  },
+  {
+   "id": "NR-P5-POLLEN-TUBE",
+   "topicId": "P5-CYCLES-REPRODUCTION",
+   "summary": "Pollen tube formation",
+   "note": "Knowledge of the pollen tube formation is not required.",
+   "pages": [
+    43
+   ],
+   "streams": [
+    "standard"
+   ],
+   "outcomeIds": [
+    "P5-CYCLES-REPRODUCTION-S-C3"
+   ],
+   "check": "block",
+   "block": [
+    "\\bpollen[- ]tubes?\\b"
+   ],
+   "flag": []
+  },
+  {
+   "id": "NR-P5-FERTILISATION-SITE",
+   "topicId": "P5-CYCLES-REPRODUCTION",
+   "summary": "Where fertilisation takes place in the female reproductive system",
+   "note": "The specific location where fertilisation takes place in the female reproductive system is not required.",
+   "pages": [
+    43
+   ],
+   "streams": [
+    "standard"
+   ],
+   "outcomeIds": [
+    "P5-CYCLES-REPRODUCTION-S-C3"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bfallopian\\b",
+    "\\boviducts?\\b",
+    "\\bfertili[sz](?:ation|ed|es|e)\\b[^.?!]{0,60}\\b(?:in|inside|within) the (?:ovules?|ovary|ovaries|style|stigma|oviducts?)\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-FOETAL-DEVELOPMENT",
+   "topicId": "P5-CYCLES-REPRODUCTION",
+   "summary": "Foetal development and the umbilical cord",
+   "note": "Foetal development and the mechanism of obtaining air, food and water through the umbilical cord are not required.",
+   "pages": [
+    44,
+    46
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-CYCLES-REPRODUCTION-S-C4",
+    "P5-CYCLES-REPRODUCTION-F-C2"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bf(?:o)?et(?:us|uses|al)\\b",
+    "\\bumbilical\\b",
+    "\\bplacenta\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-VEGETATIVE-PROPAGATION",
+   "topicId": "P5-CYCLES-REPRODUCTION",
+   "summary": "Vegetative propagation, such as stem cutting",
+   "note": "Vegetative propagation methods, such as stem cutting, are not required.",
+   "pages": [
+    43,
+    46
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-CYCLES-REPRODUCTION-S-P1",
+    "P5-CYCLES-REPRODUCTION-F-P1"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bvegetative\\b",
+    "\\bstem cuttings?\\b",
+    "\\bgraft(?:s|ed|ing)?\\b",
+    "\\brhizomes?\\b"
+   ]
+  },
+  {
+   "id": "NR-P4-MUSCULOSKELETAL-DETAIL",
+   "topicId": "P4-SYSTEMS-DIGESTIVE",
+   "summary": "Names of bones and muscles; how the muscular and skeletal systems work",
+   "note": "This learning outcome introduces students to an overview of human systems in the body. Detailed knowledge of the muscular and skeletal systems (such as names of the bones/muscles in the body and descriptions of how they work) are not required.",
+   "pages": [
+    53
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P4-SYSTEMS-DIGESTIVE-A-C1"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\b(?:femur|tibia|fibula|humerus|ulna|patella|sternum|clavicle|scapula|pelvis|vertebrae?|cranium|biceps|triceps|quadriceps|hamstrings?|deltoids?|ligaments?|tendons?|cartilage)\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-RESP-CIRC-DETAIL",
+   "topicId": "P5-SYSTEMS-HUMAN-RESP-CIRC",
+   "summary": "Detailed respiratory and circulatory structures (alveoli, heart chambers and valves)",
+   "note": "Detailed knowledge of respiratory system (e.g., alveoli) and circulatory system (e.g., heart chambers and valves) is not required.",
+   "pages": [
+    54,
+    55
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-SYSTEMS-HUMAN-RESP-CIRC-S-C2",
+    "P5-SYSTEMS-HUMAN-RESP-CIRC-F-C2"
+   ],
+   "check": "block",
+   "block": [
+    "\\balveol(?:i|us|ar)\\b",
+    "\\bbronch(?:i|us|ioles?|ial)\\b",
+    "\\b(?:left|right) atri(?:um|a)\\b",
+    "\\batria\\b",
+    "\\bventricles?\\b",
+    "\\b(?:heart|cardiac) (?:valves?|chambers?)\\b",
+    "\\b(?:valves?|chambers?) (?:of|in) the heart\\b"
+   ],
+   "flag": [
+    "\\bdiaphragm\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-TRANSPORT-TERMS",
+   "topicId": "P5-SYSTEMS-HUMAN-RESP-CIRC",
+   "summary": "The terms xylem, phloem, stomata, artery, vein and capillary",
+   "note": "The use of specific terms (xylem, phloem, stomata, artery, vein, capillary) is not required.",
+   "pages": [
+    54,
+    55
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-SYSTEMS-HUMAN-RESP-CIRC-S-P2",
+    "P5-SYSTEMS-HUMAN-RESP-CIRC-F-P1"
+   ],
+   "check": "block",
+   "block": [
+    "\\bxylem\\b",
+    "\\bphloem\\b",
+    "\\bstomat(?:a|al|es?)\\b",
+    "\\bstoma\\b",
+    "\\barter(?:y|ies|ial)\\b",
+    "\\bcapillar(?:y|ies)\\b"
+   ],
+   "flag": [
+    "\\bveins?\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-TUBE-POSITIONS",
+   "topicId": "P5-SYSTEMS-PLANT-TRANSPORT",
+   "summary": "Relative positions of the water-carrying and food-carrying tubes",
+   "note": "Recall of the relative positions of water-carrying and food-carrying tubes is not required.",
+   "pages": [
+    57,
+    58
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-SYSTEMS-PLANT-TRANSPORT-S-C1",
+    "P5-SYSTEMS-PLANT-TRANSPORT-F-C1"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bvascular bundles?\\b",
+    "\\b(?:water|food)[- ]carrying tubes?\\b[^.?!]{0,60}\\b(?:inner|outer|innermost|outermost|(?:nearer|closer) to the (?:centre|center|surface|outside))\\b",
+    "\\b(?:inner|outer|innermost|outermost)\\b[^.?!]{0,40}\\b(?:water|food)[- ]carrying tubes?\\b"
+   ]
+  },
+  {
+   "id": "NR-P5-XYLEM-PHLOEM",
+   "topicId": "P5-SYSTEMS-PLANT-TRANSPORT",
+   "summary": "The terms xylem and phloem",
+   "note": "The use of specific terms (xylem and phloem) is not required.",
+   "pages": [
+    57,
+    58
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-SYSTEMS-PLANT-TRANSPORT-S-C1",
+    "P5-SYSTEMS-PLANT-TRANSPORT-F-C1"
+   ],
+   "check": "block",
+   "block": [
+    "\\bxylem\\b",
+    "\\bphloem\\b"
+   ],
+   "flag": []
+  },
+  {
+   "id": "NR-P5-TRANSPIRATION-PULL",
+   "topicId": "P5-SYSTEMS-PLANT-TRANSPORT",
+   "summary": "Transpiration pull",
+   "note": "The concept of transpiration pull is not required.",
+   "pages": [
+    57,
+    58
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P5-SYSTEMS-PLANT-TRANSPORT-S-C1",
+    "P5-SYSTEMS-PLANT-TRANSPORT-F-C1"
+   ],
+   "check": "block",
+   "block": [
+    "\\btranspiration pull\\b"
+   ],
+   "flag": [
+    "\\btranspir(?:ation|es?|ed|ing)\\b"
+   ]
+  },
+  {
+   "id": "NR-P3-NICKEL-COBALT",
+   "topicId": "P3-INTERACTIONS-MAGNETS",
+   "summary": "Recalling nickel and cobalt as magnetic materials",
+   "note": "Recall of magnetic materials such as nickel and cobalt is not required.",
+   "pages": [
+    62
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P3-INTERACTIONS-MAGNETS-A-C2"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bnickel\\b",
+    "\\bcobalt\\b"
+   ]
+  },
+  {
+   "id": "NR-P3-SHIELDING-INDUCTION",
+   "topicId": "P3-INTERACTIONS-MAGNETS",
+   "summary": "Magnetic shielding and magnetic induction",
+   "note": "Magnetic shielding and magnetic induction are not required.",
+   "pages": [
+    62
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P3-INTERACTIONS-MAGNETS-A-C2"
+   ],
+   "check": "block",
+   "block": [
+    "\\bmagnetic(?:ally)? (?:shield(?:s|ed|ing)?|induc(?:tion|ed))\\b",
+    "\\binduced (?:magnets?|magnetism|poles?)\\b"
+   ],
+   "flag": [
+    "\\binduction\\b",
+    "\\bshield(?:s|ed|ing)?\\b[^.?!]{0,40}\\bmagnet"
+   ]
+  },
+  {
+   "id": "NR-P6-ROLLING-FRICTION",
+   "topicId": "P6-INTERACTIONS-FORCES",
+   "summary": "Direction of friction on rolling objects such as wheels and balls",
+   "note": "Direction of frictional force for “rolling objects” such as wheels and balls is not required.",
+   "pages": [
+    63,
+    65
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P6-INTERACTIONS-FORCES-S-C3",
+    "P6-INTERACTIONS-FORCES-F-C3"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\bdirection of (?:the )?friction(?:al)?(?: force)?\\b[^.?!]{0,80}\\b(?:roll(?:s|ing)?|wheels?|balls?)\\b",
+    "\\b(?:roll(?:s|ing)?|wheels?|balls?)\\b[^.?!]{0,80}\\bdirection of (?:the )?friction"
+   ]
+  },
+  {
+   "id": "NR-P6-RESISTANCE-TERMS",
+   "topicId": "P6-INTERACTIONS-FORCES",
+   "summary": "The terms air resistance and water resistance",
+   "note": "The use of specific terms such as ‘air resistance’ and ‘water resistance’ is not required.",
+   "pages": [
+    63,
+    65
+   ],
+   "streams": [
+    "standard",
+    "foundation"
+   ],
+   "outcomeIds": [
+    "P6-INTERACTIONS-FORCES-S-C3",
+    "P6-INTERACTIONS-FORCES-F-C3"
+   ],
+   "check": "block",
+   "block": [
+    "\\bair resistance\\b",
+    "\\bwater resistance\\b"
+   ],
+   "flag": []
+  },
+  {
+   "id": "NR-P4-LAW-OF-REFLECTION",
+   "topicId": "P4-ENERGY-LIGHT",
+   "summary": "The law of reflection",
+   "note": "The law of reflection is not required.",
+   "pages": [
+    75
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P4-ENERGY-LIGHT-A-C1"
+   ],
+   "check": "block",
+   "block": [
+    "\\blaws? of reflection\\b",
+    "\\bangles? of (?:incidence|reflection)\\b",
+    "\\bincident (?:rays?|angles?)\\b"
+   ],
+   "flag": [
+    "\\breflected rays?\\b",
+    "\\bnormal line\\b"
+   ]
+  },
+  {
+   "id": "NR-P4-TRANSPARENCY-TERMS",
+   "topicId": "P4-ENERGY-LIGHT",
+   "summary": "The terms transparent, translucent and opaque",
+   "note": "The use of specific terms (transparent, translucent, opaque) is not required.",
+   "pages": [
+    75
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P4-ENERGY-LIGHT-A-P1"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "\\btransparent\\b",
+    "\\btranslucent\\b",
+    "\\bopaque\\b"
+   ]
+  },
+  {
+   "id": "NR-P4-HEAT-TRANSFER-RATES",
+   "topicId": "P4-ENERGY-HEAT",
+   "summary": "Comparing how fast specific metals conduct heat",
+   "note": "Recall of the rate of heat transfer of specific materials (such as different types of metals) is not required.",
+   "pages": [
+    77
+   ],
+   "streams": [
+    "all"
+   ],
+   "outcomeIds": [
+    "P4-ENERGY-HEAT-A-C8"
+   ],
+   "check": "flag",
+   "block": [],
+   "flag": [
+    "^(?=[\\s\\S]*\\b(?:heat\\w*|hot(?:ter)?|warm\\w*|cold\\w*)\\b)[\\s\\S]*?\\b(copper|alumin(?:i)?um|silver|gold|brass|bronze|zinc|iron|steel)\\b[\\s\\S]*\\b(?!\\1\\b)(?:copper|alumin(?:i)?um|silver|gold|brass|bronze|zinc|iron|steel)\\b"
+   ]
+  },
+  {
+   "id": "NR-P6-POTENTIAL-ENERGY-TERMS",
+   "topicId": "P6-ENERGY-CONVERSION",
+   "summary": "The terms chemical, gravitational and elastic potential energy",
+   "note": "The use of specific terms (chemical potential energy, gravitational potential energy and elastic potential energy) is not required.",
+   "pages": [
+    80
+   ],
+   "streams": [
+    "standard"
+   ],
+   "outcomeIds": [
+    "P6-ENERGY-CONVERSION-S-C2"
+   ],
+   "check": "block",
+   "block": [
+    "\\b(?:chemical|gravitational|elastic) potential energy\\b"
+   ],
+   "flag": [
+    "\\bchemical energy\\b",
+    "\\bstrain energy\\b"
+   ]
+  }
+ ]
+}

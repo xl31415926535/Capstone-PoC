@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createApp } from '../server.mjs';
+import { sqlite, buildBank } from '../bank.mjs';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const port=Number(process.argv[2]||4319);
@@ -18,6 +19,8 @@ fs.writeFileSync(path.join(dataDir,'records.json'),JSON.stringify({schemaVersion
 fs.mkdirSync(path.join(dataDir,'evaluations'));
 const batches=['evaluation-v2.json','evaluation-v2-first-run.json'].map(name=>{const {rows,metrics,definitions,...batch}=read(name);return batch;});
 fs.writeFileSync(path.join(dataDir,'evaluations','records.json'),JSON.stringify({schemaVersion:1,records:batches},null,2));
+// The constructed sample bank (not real papers) fills the Source bank and Syllabus coverage pages.
+const bank=sqlite?buildBank({output:path.join(dataDir,'question-bank.sqlite'),sources:[path.join(root,'examples','bank-sample')]}):null;
 const app=createApp({dataDir,seed:false,providerStatus:()=>[
  {id:'replay',label:'Recorded example',available:true,model:null,detail:'Saved evidence only. Online calls are disabled in this demonstration.'},
  ...['codex','gemini','openai','jev'].map(id=>({id,label:id,available:false,model:null,detail:'Disabled in recorded demonstration. Use start-local.ps1 for configured live providers.'}))
@@ -25,5 +28,6 @@ const app=createApp({dataDir,seed:false,providerStatus:()=>[
 app.server.listen(port,'127.0.0.1',()=>{
  console.log('RECORDED EVIDENCE DEMO: http://127.0.0.1:'+port);
  console.log('17 saved drafts, 2 historical reports. No online model calls. Review decisions are demo-only.');
+ console.log(bank?`Source bank: constructed sample, ${bank.questions} questions (not real papers).`:'Source bank: needs Node 22.5 or later; those pages will explain how to enable it.');
  console.log('Isolated demo data: '+dataDir);
 });

@@ -75,6 +75,203 @@
               "rows"
             ]
           },
+          "figure": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "panels": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "elements": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "battery",
+                              "bulb",
+                              "switch",
+                              "gap",
+                              "wire",
+                              "parallel"
+                            ]
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "state": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "closed",
+                              "none"
+                            ]
+                          },
+                          "material": {
+                            "type": "string",
+                            "enum": [
+                              "conductor",
+                              "insulator",
+                              "none"
+                            ]
+                          },
+                          "branches": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "bulb",
+                                      "switch",
+                                      "gap",
+                                      "wire"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "state": {
+                                    "type": "string",
+                                    "enum": [
+                                      "open",
+                                      "closed",
+                                      "none"
+                                    ]
+                                  },
+                                  "material": {
+                                    "type": "string",
+                                    "enum": [
+                                      "conductor",
+                                      "insulator",
+                                      "none"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "label",
+                                  "state",
+                                  "material"
+                                ]
+                              },
+                              "minItems": 1,
+                              "maxItems": 4
+                            },
+                            "minItems": 0,
+                            "maxItems": 3
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "label",
+                          "state",
+                          "material",
+                          "branches"
+                        ]
+                      },
+                      "minItems": 2,
+                      "maxItems": 8
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "elements"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 4
+              }
+            },
+            "required": [
+              "panels"
+            ]
+          },
+          "verification": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "lit_bulbs",
+                  "brightest_bulb",
+                  "dimmest_bulb",
+                  "brightest_circuit",
+                  "dimmest_circuit",
+                  "switch_setting"
+                ]
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "optionId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    },
+                    "bulbs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 0,
+                      "maxItems": 8
+                    },
+                    "circuit": {
+                      "type": "string"
+                    },
+                    "closedSwitches": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 0,
+                      "maxItems": 6
+                    }
+                  },
+                  "required": [
+                    "optionId",
+                    "bulbs",
+                    "circuit",
+                    "closedSwitches"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 4
+              },
+              "targetLit": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 0,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "kind",
+              "options",
+              "targetLit"
+            ]
+          },
           "options": {
             "type": "array",
             "items": {
@@ -162,8 +359,11 @@
                 "objectiveId": {
                   "type": "string",
                   "enum": [
+                    "P5-ELEC-SYSTEM",
                     "P5-ELEC-CLOSED",
-                    "P5-ELEC-MATERIALS"
+                    "P5-ELEC-MATERIALS",
+                    "P5-ELEC-DIAGRAMS",
+                    "P5-ELEC-VARIABLES"
                   ]
                 },
                 "evidence": {
@@ -177,7 +377,7 @@
               ]
             },
             "minItems": 1,
-            "maxItems": 2
+            "maxItems": 3
           },
           "design": {
             "type": "object",
@@ -216,6 +416,8 @@
           "context",
           "question",
           "table",
+          "figure",
+          "verification",
           "options",
           "answer",
           "mappings",

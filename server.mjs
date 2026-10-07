@@ -4,17 +4,21 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { Store, AppError } from './store.mjs';
-import { validateItem, schemaErrors } from './validation.mjs';
-import { families, draftSchema, batchBlindSchema, makePlan, generationPrompt, batchBlindPrompt, draftToItem } from './model-v2.mjs';
-import { createPracticeService, evaluationReport, labelsFor, difficulties, issueCodes } from './learning.mjs';
+import { validateItem, schemaErrors, pupilText } from './validation.mjs';
+import { families, draftSchema, batchBlindSchema, makePlan, retrievalQueries, generationPrompt, batchBlindPrompt, draftToItem, mappingFor } from './model-v2.mjs';
+import { createPracticeService, evaluationReport, compareConditions, calibrationReport, labelsFor, difficulties, issueCodes } from './learning.mjs';
 import { createFixtures } from './fixtures.mjs';
 import { providerStatus, runStructured, runJev, makeGenerationPrompt, makeBlindPrompt } from './providers.mjs';
 import { printableRecord } from './export.mjs';
+import { syllabus } from './syllabus.mjs';
+import { FLAG_CODES, PILOT_TOPIC, bankFileStatus, openBank, bankSummary, searchQuestions, getQuestion, assetData, reviewTag, coverage, similarSources, retrieveReferences } from './bank.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const curriculum = JSON.parse(fs.readFileSync(path.join(root, 'curriculum.json'), 'utf8'));
 const maxBody = 200_000;
 const statuses = ['approved', 'changes_requested', 'rejected'];
+const bankSyllabus = { topics: syllabus.topics.map(({ id, theme, level, label }) => ({ id, theme, level, label })), pilotOutcomes: syllabus.topics.find(t => t.id === PILOT_TOPIC).outcomes.filter(o => o.stream === 'standard').map(({ id, text, page }) => ({ id, text, page })) };
+const bankLevels = ['', 'primary', 'secondary', 'mixed', 'unknown'];
 const now = () => new Date().toISOString();
 
 function normalizePending(item, provenance, version = 1, id = null) {
@@ -62,7 +66,18 @@ export function createApp(options = {}) {
   const batchStore = new Store(path.join(path.dirname(store.file), 'evaluations'));
   for(const b of batchStore.all())if(['queued','running'].includes(b.status))batchStore.update(b.id,b.version,x=>({...x,status:'interrupted',error:'Server restarted during the run. Existing results are retained; no automatic retry was made.'}));
   const fixtures = createFixtures();
-  const practice = createPracticeService(store,fixtures);
+  // Anonymous practice responses (question version and chosen option only) for difficulty calibration.
+  const responseStore = new Store(path.join(path.dirname(store.file), 'responses'));
+  const practice = createPracticeService(store,fixtures,responseStore);
+  // The source bank is opened per request, so a rebuilt file is used at once and never held open.
+  // An explicit data directory (tests, the recorded demo) keeps its bank beside its records.
+  const bankFile = options.bankFile || (options.dataDir ? null : process.env.SIMCC_BANK_DB) || path.join(path.dirname(store.file), 'question-bank.sqlite');
+  const withBank = (fn, write = false) => { const db = openBank(bankFile, { write }); try { return fn(db); } finally { db.close(); } };
+  const bankInfo = () => {
+    const status = bankFileStatus(bankFile);
+    if (!status.available) return { ...status, syllabus: bankSyllabus };
+    try { return { ...withBank(bankSummary), syllabus: bankSyllabus }; } catch (error) { return { available: false, reason: error.message, syllabus: bankSyllabus }; }
+  };
   const csrfToken = randomBytes(32).toString('hex');
   const jobs = new Map();
   const providers = options.providerStatus || providerStatus;
@@ -70,8 +85,14 @@ export function createApp(options = {}) {
   const jevRunner = options.runJev || runJev;
   let active = false;
 
+  // Source questions to compare a draft with: null when no bank is available.
+  function sourceQuestions(record) {
+    if (!bankFileStatus(bankFile).available) return null;
+    try { return withBank(db => similarSources(db, pupilText(record.item), { include: (record.provenance?.retrieval?.references || []).map(r => r.bankId) })); }
+    catch { return null; }
+  }
   function check(record) {
-    record.checks = validateItem(record.item, store.all().filter(r => r.id !== record.id));
+    record.checks = validateItem(record.item, store.all().filter(r => r.id !== record.id), { sourceQuestions: sourceQuestions(record) });
     if(record.item.model_version==='science-v2' && !record.blindReview) {
       record.checks.results.push({id:'required_blind',label:'Blind review required',status:'fail',detail:'This open-form task requires a completed independent solve before approval.'});record.checks.blocking++;
     }
@@ -143,25 +164,62 @@ export function createApp(options = {}) {
       const route = url.pathname;
       const mutation = !['GET', 'HEAD'].includes(req.method);
       if (mutation && req.headers['x-csrf-token'] !== csrfToken) throw new AppError('Invalid local session token. Refresh the page.', 403, 'CSRF');
-      if (req.method === 'GET' && route === '/api/bootstrap') return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches:batchStore.all().map(b=>evaluationReport(b,store.all())), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })) });
+      if (req.method === 'GET' && route === '/api/bootstrap') { const bank = bankInfo(), batches = batchStore.all().map(b => evaluationReport(b, store.all())); return send(200, { csrfToken, curriculum, families, providers: providers(), records: store.all(), batches, comparison: compareConditions(batches), calibration: calibrationReport(store.all(), responseStore.all()), fixtures: fixtures.map(({ id, label, description }) => ({ id, label, description })), bank: { available: bank.available, label: bank.label || null, questions: bank.counts?.questions ?? null } }); }
+      if (req.method === 'GET' && route === '/api/bank') return send(200, bankInfo());
+      if (req.method === 'GET' && route === '/api/bank/questions') {
+        const p = url.searchParams, filters = { q: p.get('q') || '', topic: p.get('topic') || '', level: p.get('level') || '', flag: p.get('flag') || '', limit: Number(p.get('limit') || 25), offset: Number(p.get('offset') || 0) };
+        if (!Number.isInteger(filters.limit) || filters.limit < 1 || filters.limit > 50 || !Number.isInteger(filters.offset) || filters.offset < 0 || filters.offset > 100000 || filters.q.length > 200 || (filters.topic && !bankSyllabus.topics.some(t => t.id === filters.topic)) || !bankLevels.includes(filters.level) || !['', 'clean', 'figure', ...FLAG_CODES].includes(filters.flag)) throw new AppError('Invalid source bank search.');
+        return send(200, withBank(db => searchQuestions(db, filters)));
+      }
+      const bankRoute = route.match(/^\/api\/bank\/(questions|assets)\/(\d{1,9})(\/review)?$/);
+      if (bankRoute) {
+        const [, kind, idText, review] = bankRoute, id = Number(idText);
+        if (kind === 'assets' && !review && req.method === 'GET') {
+          const asset = withBank(db => assetData(db, id));
+          res.writeHead(200, { ...commonHeaders, 'Content-Type': asset.mediaType, 'Content-Security-Policy': "default-src 'none'" });
+          return res.end(asset.data);
+        }
+        if (kind === 'questions' && !review && req.method === 'GET') return send(200, { question: withBank(db => getQuestion(db, id)) });
+        if (kind === 'questions' && review && req.method === 'POST') { const body = await readBody(req); return send(200, { question: withBank(db => reviewTag(db, id, body), true) }); }
+        throw new AppError('Unsupported method.', 405);
+      }
+      if (req.method === 'GET' && route === '/api/coverage') {
+        const bank = bankInfo();
+        if (bank.available) return send(200, withBank(db => coverage(db, store.all(), curriculum)));
+        return send(200, { ...coverage(null, store.all(), curriculum), bankStatus: { reason: bank.reason } });
+      }
       if(req.method==='GET'&&route==='/api/practice/config')return send(200,{csrfToken,curriculum,...practice.config()});
       if(req.method==='POST'&&route==='/api/practice/start')return send(200,practice.start(await readBody(req)));
       if(req.method==='POST'&&/^\/api\/practice\/[^/]+\/submit$/.test(route))return send(200,practice.submit(route.split('/')[3],await readBody(req)));
-      if(req.method==='GET'&&route==='/api/evaluations')return send(200,{batches:batchStore.all().map(b=>evaluationReport(b,store.all()))});
+      if(req.method==='GET'&&route==='/api/evaluations'){const batches=batchStore.all().map(b=>evaluationReport(b,store.all()));return send(200,{batches,comparison:compareConditions(batches),calibration:calibrationReport(store.all(),responseStore.all())});}
+      if(req.method==='GET'&&route==='/api/calibration')return send(200,calibrationReport(store.all(),responseStore.all()));
+      if(req.method==='GET'&&route==='/api/calibration/export')return send(200,{exportedAt:now(),purpose:'Anonymous practice responses for difficulty calibration. No names, accounts or device details.',report:calibrationReport(store.all(),responseStore.all()),sessions:responseStore.all()},{'Content-Disposition':'attachment; filename="simcc-pupil-responses.json"'});
       if(req.method==='GET'&&/^\/api\/evaluations\/[^/]+\/export$/.test(route))return send(200,evaluationReport(batchStore.get(route.split('/')[3]),store.all()),{'Content-Disposition':'attachment; filename="simcc-evaluation.json"'});
       if(req.method==='GET'&&route==='/api/feedback/export')return send(200,{exportedAt:now(),purpose:'Reviewer feedback for later analysis; not automatically accepted training data.',records:store.all().filter(r=>r.reviewEvents.length).map(r=>({id:r.id,version:r.version,status:r.status,item:r.item,labels:labelsFor(r),events:r.reviewEvents}))},{'Content-Disposition':'attachment; filename="simcc-reviewer-feedback.json"'});
       if(req.method==='POST'&&route==='/api/batches') {
         const body=await readBody(req);assertProvider(body.provider,true);
+        // The blind solve can use a different provider from the generator for a more independent check.
+        const blindProvider=body.blindProvider??body.provider;assertProvider(blindProvider,true);
+        if(body.retrieval!==undefined&&typeof body.retrieval!=='boolean')throw new AppError('Retrieval must be true or false.');
         if(active)throw new AppError('Another model job is still running.',409,'BUSY');
         const plan=makePlan(body.count??10,body.family||'balanced',body.difficulty||'Mixed');
+        // Retrieval pilot: matching source questions go into the prompt as examples of level and style.
+        let retrieval={enabled:false};
+        if(body.retrieval){
+          const queries=retrievalQueries(plan);
+          const {references,bank}=withBank(db=>({references:retrieveReferences(db,queries,{k:6}),bank:bankSummary(db)}));
+          if(!references.length)throw new AppError('The source bank has no usable P5 electricity questions to retrieve. Import sources tagged to the pilot topic, or run without retrieval.',409,'NO_REFERENCES');
+          retrieval={enabled:true,bank:{label:bank.label,builtAt:bank.builtAt},queries,references};
+        }
+        const referenceLinks=retrieval.enabled?retrieval.references.map(({ref,bankId,sourceKey,source})=>({ref,bankId,sourceKey,source})):null;
         const batchId=randomUUID();
-        batchStore.add({id:batchId,version:1,createdAt:now(),updatedAt:now(),status:'queued',provider:body.provider,plan,entries:[],generatorUsage:null,blindUsage:null});
+        batchStore.add({id:batchId,version:1,createdAt:now(),updatedAt:now(),status:'queued',provider:body.provider,blindProvider,retrieval,plan,entries:[],generatorUsage:null,blindUsage:null});
         const result=job(async(jobId,stage)=>{
           const save=patch=>batchStore.update(batchId,1,b=>({...b,...patch}));
           const entries=[];save({status:'running'});
           try {
             stage(`Designing and generating ${plan.length} curriculum-grounded questions`);
-            const generated=await structuredRunner(body.provider,generationPrompt(plan,curriculum,store.all()),'draft-schema.json',jobId+'-generate',stage);
+            const generated=await structuredRunner(body.provider,generationPrompt(plan,curriculum,store.all(),retrieval.enabled?retrieval.references:[]),'draft-schema.json',jobId+'-generate',stage);
             const errors=schemaErrors(generated.value,draftSchema);
             if(errors.length||generated.value.questions.length!==plan.length)throw new AppError('Generation returned an incomplete or malformed batch. '+errors.slice(0,3).join('; '),502);
             save({generatorUsage:generated.usage||null,generatorModel:generated.model||null,generationMs:generated.durationMs});
@@ -169,8 +227,9 @@ export function createApp(options = {}) {
               try {
                 if(draft.family!==plan[index].family||draft.difficulty!==plan[index].difficulty)throw new AppError('The generated question does not match its requested family/difficulty slot.');
                 const item=draftToItem(draft,curriculum);
-                const record=addRecord(item,{mode:'live',provider:body.provider,model:generated.model,label:'Live curriculum-first generation · science-v2',durationMs:generated.durationMs,usage:null,batchId,sourceItemId:null},draft.title);
-                entries.push({index:index+1,family:draft.family,recordId:record.id,version:1,initialLocalBlocking:record.checks.results.filter(c=>c.status==='fail'&&c.id!=='required_blind').length});
+                const record=addRecord(item,{mode:'live',provider:body.provider,model:generated.model,label:'Live curriculum-first generation · science-v2'+(retrieval.enabled?' · with source questions':''),durationMs:generated.durationMs,usage:null,batchId,sourceItemId:null,...(referenceLinks?{retrieval:{references:referenceLinks}}:{})},draft.title);
+                const overlap=record.checks.results.find(c=>c.id==='source_similarity');
+                entries.push({index:index+1,family:draft.family,recordId:record.id,version:1,initialLocalBlocking:record.checks.results.filter(c=>c.status==='fail'&&c.id!=='required_blind').length,initialSourceStatus:overlap?.status||null,initialSourceOverlap:record.checks.sourceSimilarity?.best?.score??null,initialSourceMatch:record.checks.sourceSimilarity?.best?.label||null});
               } catch(error) {entries.push({index:index+1,family:plan[index].family,error:error instanceof AppError?error.message:'Generated item could not be stored.'});}
             }
             save({entries});
@@ -178,14 +237,14 @@ export function createApp(options = {}) {
             if(candidates.length) {
               try {
                 stage(`Independently solving ${candidates.length} questions without their answer keys`);
-                const reviewed=await structuredRunner(body.provider,batchBlindPrompt(candidates,curriculum),'batch-blind-schema.json',jobId+'-blind',stage);
+                const reviewed=await structuredRunner(blindProvider,batchBlindPrompt(candidates,curriculum),'batch-blind-schema.json',jobId+'-blind',stage);
                 const invalid=schemaErrors(reviewed.value,batchBlindSchema);
                 const reviews=reviewed.value?.reviews;
                 if(invalid.length||reviews.length!==candidates.length||new Set(reviews.map(r=>r.id)).size!==candidates.length||reviews.some(r=>!candidates.some(c=>c.id===r.id)))throw new AppError('Blind reviewer returned incomplete or mismatched item IDs.',502);
                 for(const review of reviews) {
                   const entry=entries.find(e=>e.recordId===review.id);
                   try {
-                    const record=store.update(review.id,entry.version,r=>{r.blindReview={provider:body.provider,model:reviewed.model,optionId:review.optionId,reasoning:review.reasoning,issues:review.issues,agreement:review.optionId===r.item.answer.option_id,ranAt:now(),version:r.version,usage:null,batchId};return check(r);});
+                    const record=store.update(review.id,entry.version,r=>{r.blindReview={provider:blindProvider,model:reviewed.model,optionId:review.optionId,reasoning:review.reasoning,issues:review.issues,agreement:review.optionId===r.item.answer.option_id,ranAt:now(),version:r.version,usage:null,batchId};return check(r);});
                     entry.initialBlindAgreement=record.blindReview.agreement;entry.initialBlindIssues=record.blindReview.issues;
                   }catch{entry.blindError='Item changed during blind review; stale output was discarded.';}
                 }
@@ -215,7 +274,7 @@ export function createApp(options = {}) {
         if (body.provider === 'replay') {
           const fixture = fixtures.find(f => f.id === (body.fixtureId || 'original'));
           if (!fixture) throw new AppError('Unknown recorded example.');
-          return send(202, job(async (_, stage) => { stage('Loading recorded example and executing local checks'); return addRecord(fixture.item, { mode: fixture.mode, provider: 'recorded', model: null, label: fixture.mode === 'fixture' ? 'Deliberate validation test · ' + fixture.label : 'Recorded original example · no API call', durationMs: 0, usage: null, sourceItemId: fixture.item.item_id }, fixture.label); }));
+          return send(202, job(async (_, stage) => { stage('Loading recorded example and executing local checks'); return addRecord(fixture.item, { mode: fixture.mode, provider: 'recorded', model: null, label: fixture.mode === 'fixture' ? 'Deliberate validation test · ' + fixture.label : fixture.mode === 'constructed' ? 'Constructed example written by the project team · not model output' : 'Recorded original example · no API call', durationMs: 0, usage: null, sourceItemId: fixture.item.item_id }, fixture.label); }));
         }
         return send(202, job(async (jobId, stage) => {
           stage('Preparing verified curriculum context');
@@ -292,9 +351,8 @@ export function createApp(options = {}) {
             const record=store.update(id,body.version,r=>{
               const before=labelsFor(r);r.version++;r.status='draft';r.blindReview=null;r.jevReview=null;
               r.labels={difficulty:body.difficulty,objectives:body.objectives,skill:body.skill.trim(),reviewed:true};
-              const base=fixtures.find(f=>f.id==='original').item;
               r.item.difficulty_estimate=body.difficulty;r.item.skill=body.skill.trim();
-              r.item.syllabus_mapping=body.objectives.map(objective=>({...base.syllabus_mapping.find(m=>m.internal_mapping_id===objective),item_evidence:r.item.syllabus_mapping.find(m=>m.internal_mapping_id===objective)?.item_evidence||'Mapping added by academic reviewer: '+body.note.trim()}));
+              r.item.syllabus_mapping=body.objectives.map(objective=>({...mappingFor(objective,curriculum),item_evidence:r.item.syllabus_mapping.find(m=>m.internal_mapping_id===objective)?.item_evidence||'Mapping added by academic reviewer: '+body.note.trim()}));
               r.item.subtopics=body.objectives.map(id=>curriculum.objectives.find(o=>o.id===id).title);
               r.item=normalizePending(r.item,r.provenance,r.version,id);
               r.reviewEvents.push({at:now(),action:'labels_corrected',reviewer:body.reviewer.trim(),note:body.note.trim(),version:r.version,before,after:r.labels,attestations:null});
@@ -305,9 +363,11 @@ export function createApp(options = {}) {
         throw new AppError('Unsupported method.', 405);
       }
       if (req.method === 'GET') {
-        const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/extensions.js':['extensions.js','text/javascript'], '/practice':['practice.html','text/html'], '/practice.js':['practice.js','text/javascript'] };
+        const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/extensions.js':['extensions.js','text/javascript'], '/practice':['practice.html','text/html'], '/practice.js':['practice.js','text/javascript'], '/bank.js':['bank.js','text/javascript'] };
         if (route === '/favicon.ico') { res.writeHead(204, commonHeaders); return res.end(); }
         if (files[route]) { const [file, type] = files[route]; return send(200, fs.readFileSync(path.join(root, 'public', file), 'utf8'), { 'Content-Type': type + '; charset=utf-8' }); }
+        // The circuit module is shared by the server and both pages.
+        if (route === '/circuit.mjs') return send(200, fs.readFileSync(path.join(root, 'circuit.mjs'), 'utf8'), { 'Content-Type': 'text/javascript; charset=utf-8' });
       }
       throw new AppError('Not found.', 404);
     } catch (error) {
@@ -316,7 +376,7 @@ export function createApp(options = {}) {
   });
   server.requestTimeout = 10000;
   server.headersTimeout = 10000;
-  return { server, store, batchStore, jobs, csrfToken };
+  return { server, store, batchStore, jobs, csrfToken, bankFile };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

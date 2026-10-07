@@ -1,0 +1,153 @@
+{
+  "format": "simcc-source-bank/1",
+  "label": "Constructed sample bank",
+  "notice": "Constructed sample questions written by the project team for tests and the no-API demo. They are not exam or olympiad questions, and their keys were set by the authors.",
+  "documents": [
+    {
+      "key": "simcc-constructed-sample-2026",
+      "provider": "SIMCC Capstone Group 20",
+      "competition": "Constructed sample (not a real paper)",
+      "grade": 5,
+      "grade_scope": "P5",
+      "document_kind": "questions",
+      "landing_url": "https://github.com/xl31415926535/Capstone-PoC",
+      "download_url": "https://github.com/xl31415926535/Capstone-PoC/tree/main/examples/bank-sample",
+      "local_path": "examples/bank-sample/sample-sources.json",
+      "file": "sample-sources.json",
+      "page_count": 1,
+      "extracted_at": "2026-10-07",
+      "attribution": "Written by the SIMCC capstone team for testing this prototype.",
+      "provenance_status": "constructed_sample",
+      "questions": [
+        {
+          "number": 1,
+          "stem": "Siti connects each object below, one at a time, into a circuit with a battery and a bulb. Which object makes the bulb light up?",
+          "options": { "A": "a plastic ruler", "B": "a steel paper clip", "C": "a rubber band", "D": "a wooden ice-cream stick" },
+          "correct_option": "B",
+          "answer_source": "author_key",
+          "explanation": "Steel is a metal. Metals are electrical conductors, so the circuit is closed and the bulb lights up.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Electrical conductors and insulators",
+          "skill": "Recall", "difficulty": "Easy", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Tests whether an object completes a circuit." }],
+          "outcomes": [{ "id": "P5-SYSTEMS-ELECTRICAL-S-C3", "evidence": "Identify a conductor among common objects." }]
+        },
+        {
+          "number": 2,
+          "stem": "A battery, a bulb and a switch are connected in one loop. All the parts work, but the bulb does not light up. What is the most likely reason?",
+          "options": { "A": "The switch is open.", "B": "The battery is connected the wrong way round.", "C": "The wires are made of copper.", "D": "The battery is new." },
+          "correct_option": "A",
+          "answer_source": "author_key",
+          "explanation": "An open switch leaves a gap in the circuit, so no current flows and the bulb stays off.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Closed circuits",
+          "skill": "Understanding", "difficulty": "Easy", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Reasons about an open switch." }],
+          "outcomes": [{ "id": "P5-SYSTEMS-ELECTRICAL-S-C2", "evidence": "A circuit must be closed for current to flow." }]
+        },
+        {
+          "number": 3,
+          "stem": "Two identical bulbs are connected in series with one battery. A third identical bulb is then added in series. What happens to the first two bulbs?",
+          "options": { "A": "They become brighter.", "B": "They become dimmer.", "C": "They stay equally bright.", "D": "They stop lighting up." },
+          "correct_option": "B",
+          "answer_source": "author_key",
+          "explanation": "More bulbs in series make the current in the loop smaller, so every bulb is dimmer.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Number of bulbs in series",
+          "skill": "Application", "difficulty": "Medium", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Effect of adding a bulb in series." }],
+          "outcomes": [{ "id": "P5-SYSTEMS-ELECTRICAL-S-P2", "evidence": "Number of bulbs arranged in series." }]
+        },
+        {
+          "number": 4,
+          "stem": "The diagram shows a circuit with three identical bulbs, A, B and C, and a switch S1. Switch S1 is open. Which bulbs light up?",
+          "options": { "1": "A and C only", "2": "B and C only", "3": "C only", "4": "A, B and C" },
+          "correct_option": "2",
+          "answer_source": "author_key",
+          "explanation": "Bulb A is in the same branch as the open switch, so no current passes through it. Bulb B's branch is still closed, and bulb C carries the current to both branches.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Closed circuits and circuit diagrams",
+          "skill": "Analysis", "difficulty": "Medium", "depends_on_image": 1, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Reads a circuit with a parallel section." }],
+          "outcomes": [
+            { "id": "P5-SYSTEMS-ELECTRICAL-S-C2", "evidence": "Which loops are closed when S1 is open." },
+            { "id": "P5-SYSTEMS-ELECTRICAL-S-P1", "evidence": "Reads the circuit diagram." }
+          ],
+          "assets": [
+            {
+              "kind": "circuit_figure",
+              "note": "Constructed circuit; the server solves it to check the key.",
+              "figure": { "panels": [{ "label": "", "elements": [
+                { "kind": "battery", "label": "", "state": "none", "material": "none", "branches": [] },
+                { "kind": "parallel", "label": "", "state": "none", "material": "none", "branches": [
+                  [{ "kind": "bulb", "label": "A", "state": "none", "material": "none" }, { "kind": "switch", "label": "S1", "state": "open", "material": "none" }],
+                  [{ "kind": "bulb", "label": "B", "state": "none", "material": "none" }]
+                ] },
+                { "kind": "bulb", "label": "C", "state": "none", "material": "none", "branches": [] }
+              ] }] },
+              "check": { "kind": "lit_bulbs", "targetLit": [], "options": [
+                { "optionId": 1, "bulbs": ["A", "C"], "circuit": "", "closedSwitches": [] },
+                { "optionId": 2, "bulbs": ["B", "C"], "circuit": "", "closedSwitches": [] },
+                { "optionId": 3, "bulbs": ["C"], "circuit": "", "closedSwitches": [] },
+                { "optionId": 4, "bulbs": ["A", "B", "C"], "circuit": "", "closedSwitches": [] }
+              ] }
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "stem": "Which part of a simple circuit is its energy source?",
+          "options": { "A": "the battery", "B": "the bulb", "C": "the switch", "D": "the wire" },
+          "correct_option": "A",
+          "answer_source": "author_key",
+          "explanation": "The battery supplies the energy that the other parts of the circuit use.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Parts of an electrical system",
+          "skill": "Recall", "difficulty": "Easy", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Names the parts of a circuit." }],
+          "outcomes": [{ "id": "P5-SYSTEMS-ELECTRICAL-S-C1", "evidence": "The battery is the energy source of the system." }]
+        },
+        {
+          "number": 6,
+          "stem": "Ali lights a bulb with two batteries connected in series. He then takes out one battery and joins the wires again. How does the bulb change?",
+          "options": { "A": "It becomes brighter.", "B": "It becomes dimmer.", "C": "It stays equally bright.", "D": "It goes out." },
+          "correct_option": "B",
+          "answer_source": "author_key",
+          "explanation": "Fewer batteries in series give a smaller current, so the bulb is dimmer but still lights.",
+          "subject": "Science", "topic": "Electrical system", "subtopic": "Number of batteries in series",
+          "skill": "Application", "difficulty": "Medium", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-ELECTRICAL", "evidence": "Effect of removing a battery." }],
+          "outcomes": [{ "id": "P5-SYSTEMS-ELECTRICAL-S-P2", "evidence": "Number of batteries arranged in series." }]
+        },
+        {
+          "number": 7,
+          "stem": "Which object will a magnet attract?",
+          "options": { "A": "an iron nail", "B": "a copper wire", "C": "a glass marble", "D": "a plastic spoon" },
+          "correct_option": "A",
+          "answer_source": "author_key",
+          "explanation": "Magnets attract iron and steel. Copper, glass and plastic are not magnetic.",
+          "subject": "Science", "topic": "Magnets", "subtopic": "Magnetic and non-magnetic materials",
+          "skill": "Recall", "difficulty": "Easy", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P3-INTERACTIONS-MAGNETS", "evidence": "Magnetic materials." }]
+        },
+        {
+          "number": 8,
+          "stem": "On a hot day, water droplets form on the outside of a glass of iced water. Where does this water come from?",
+          "options": { "A": "Water vapour in the air condenses on the cold glass.", "B": "Water seeps out through the glass.", "C": "The ice melts through the glass.", "D": "The glass releases water when it is cold." },
+          "correct_option": "A",
+          "answer_source": "author_key",
+          "explanation": "Water vapour in the surrounding air loses heat to the cold glass and condenses into droplets.",
+          "subject": "Science", "topic": "Water", "subtopic": "Condensation",
+          "skill": "Understanding", "difficulty": "Medium", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-CYCLES-WATER", "evidence": "Condensation on a cold surface." }]
+        },
+        {
+          "number": 9,
+          "stem": "In a plant, which tubes carry water from the roots to the leaves?",
+          "options": { "A": "xylem", "B": "phloem", "C": "stomata", "D": "root hairs" },
+          "correct_option": "A",
+          "answer_source": "author_key",
+          "explanation": "Written in the style of overseas olympiad papers. The 2023 syllabus does not require the terms xylem and phloem, so the bank flags it.",
+          "subject": "Science", "topic": "Plant transport system", "subtopic": "Water-carrying tubes",
+          "skill": "Recall", "difficulty": "Easy", "depends_on_image": 0, "is_complete": 1,
+          "topics": [{ "id": "P5-SYSTEMS-PLANT-TRANSPORT", "evidence": "Transport of water in plants." }]
+        }
+      ]
+    }
+  ]
+}

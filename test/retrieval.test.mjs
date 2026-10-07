@@ -65,9 +65,10 @@ test('retrieval queries follow the plan, one per reasoning family', () => {
   assert.deepEqual(retrievalQueries(makePlan(3, 'fault_diagnosis', 'Hard')).map(q => q.key), ['fault_diagnosis']);
 });
 
-test('reference questions are pilot-topic, primary, undamaged and shared out between queries', { skip }, t => {
-  const db = openBank(sampleBank(tempDir(t)));
-  t.after(() => db.close());
+// Each test closes its database before the temporary folder is removed: Windows cannot delete an open file.
+const withSampleDb = (t, fn) => { const db = openBank(sampleBank(tempDir(t))); try { fn(db); } finally { db.close(); } };
+
+test('reference questions are pilot-topic, primary, undamaged and shared out between queries', { skip }, t => withSampleDb(t, db => {
   const refs = retrieveReferences(db, retrievalQueries(makePlan(10)), { k: 4 });
   assert.equal(refs.length, 4);
   assert.deepEqual(refs.map(r => r.ref), ['S1', 'S2', 'S3', 'S4']);
@@ -87,11 +88,9 @@ test('reference questions are pilot-topic, primary, undamaged and shared out bet
   assert.ok(filler[0].bankId < filler[1].bankId);
   // Excluded content (the xylem question) and other topics never come back.
   assert.ok(!all.some(r => /xylem|magnet|condens/i.test(r.stem)));
-});
+}));
 
-test('similar sources include the questions a draft was generated from', { skip }, t => {
-  const db = openBank(sampleBank(tempDir(t)));
-  t.after(() => db.close());
+test('similar sources include the questions a draft was generated from', { skip }, t => withSampleDb(t, db => {
   const magnet = db.prepare("SELECT id FROM questions WHERE stem LIKE '%magnet%'").get().id;
   const found = similarSources(db, 'two identical bulbs in series with one battery', { limit: 2 });
   assert.ok(found.length >= 1 && found.length <= 2);
@@ -99,7 +98,7 @@ test('similar sources include the questions a draft was generated from', { skip 
   const withExtra = similarSources(db, 'two identical bulbs in series with one battery', { limit: 2, include: [magnet] });
   assert.equal(withExtra.at(-1).id, magnet);
   assert.match(withExtra.at(-1).label, /Q\d+$/);
-});
+}));
 
 test('source overlap ignores renamed labels and numbers, and blocks near copies', () => {
   const source = 'Two identical bulbs are connected in series with one battery. A third identical bulb is then added in series. What happens to the first two bulbs? They become brighter. They become dimmer. They stay equally bright. They stop lighting up.';
